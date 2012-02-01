@@ -1,2 +1,6 @@
-An attempt to implement DataWrangler like web-based graphical user interface
-for writing DSH queries.
+An attempt to implement DataWrangler [1] inspired web-based graphical user
+interface for writing DSH [2] queries.
+
+[1] http://vis.stanford.edu/wrangler/
+
+[2] http://db.inf.uni-tuebingen.de/research/dsh
