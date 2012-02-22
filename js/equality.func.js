@@ -97,3 +97,47 @@ function dsh_gte(a, b) {
     throw new Error("Input is not of same type.");
   }
 }
+
+
+// MINIMUM
+function dhc_min(a) {
+  var type_constructor = a.type.type_constructor;
+  if(type_constructor == "Text") {
+    var min_value = "";
+    for(i=0; i<a.value.length; i++) {
+      var cur_char = type_constructor.substr(i,1);
+      if((cur_char.charCodeAt(0) < min_value.charCodeAt(0)) || !min_value) {
+        min_value = cur_char;
+      }
+    }
+    return dsh_char(min_value);
+  } else if(type_constructor == "List")) {
+    // TODO
+  } else if(type_constructor.substr(0,5) != "Tuple") {
+    // TODO
+  } else {
+    throw new Error("Input is not a valid type.");
+  }
+}
+
+
+// MAXIMUM
+function dhc_max(a) {
+  var type_constructor = a.type.type_constructor;
+  if(type_constructor == "Text") {
+    var max_value = "";
+    for(i=0; i<a.value.length; i++) {
+      var cur_char = type_constructor.substr(i,1);
+      if((cur_char.charCodeAt(0) > max_value.charCodeAt(0)) || !max_value) {
+        max_value = cur_char;
+      }
+    }
+    return dsh_char(max_value);
+  } else if(type_constructor == "List")) {
+    // TODO
+  } else if(type_constructor.substr(0,5) != "Tuple") {
+    // TODO
+  } else {
+    throw new Error("Input is not a valid type.");
+  }
+}
