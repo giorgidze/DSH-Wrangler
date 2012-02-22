@@ -6,7 +6,6 @@ function dsh_unit() {
   return jsonObject;
 }
 
-
 // BOOL: returns a "false" or "true" json object
 function dsh_bool(bool_value) {
   if(typeof bool_value=="boolean") {
@@ -28,7 +27,6 @@ function dsh_bool(bool_value) {
   }
 }
 
-
 // INTEGER: returns an integer json object
 function dsh_integer(integer_value) {
   if(parseInt(integer_value) == integer_value) {
@@ -41,7 +39,6 @@ function dsh_integer(integer_value) {
     throw new Error("Input is not of type integer.");
   }
 }
-
 
 // DOUBLE: returns an double json object
 function dsh_double(double_value) {
@@ -56,7 +53,6 @@ function dsh_double(double_value) {
   }
 }
 
-
 // CHAR: returns an character json object
 function dsh_char(character_value) {
   if((typeof character_value=="string") && (character_value.length == 1)) {
@@ -70,7 +66,6 @@ function dsh_char(character_value) {
   }
 }
 
-
 // TEXT: returns an text json object
 function dsh_text(text_value) {
   if(typeof text_value=="string") {
@@ -82,4 +77,16 @@ function dsh_text(text_value) {
   } else {
     throw new Error("Input is not of type string.");
   }
+}
+
+// List: returns an list json object
+function dsh_list(type_constructor, list_value) {
+  var jsonObject = {"type" : {"type_constructor" : "List"
+          , "argument1" : null
+          }
+          , "value" : null,
+          };
+  jsonObject.type.argument1 = type_constructor;
+  jsonObject.value = list_value;
+  return jsonObject;
 }
