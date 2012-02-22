@@ -14,7 +14,7 @@ function dsh_neq(a,b) {
 // LT: is a lesser than b?
 // (Ord a, QA a) => Q a -> Q a -> Q Bool
 function dsh_lt(a, b) {
-  if(a.type.type_constructor == b.type.type_constructor) {
+  if(a.type == b.type) {
     var type_constructor = a.type.type_constructor;
     if((type_constructor == "Integer") || (type_constructor == "Double")) {
       return dsh_bool((a.value < b.value));
@@ -38,7 +38,7 @@ function dsh_lt(a, b) {
 // GT: is a greater than b?
 // (Ord a, QA a) => Q a -> Q a -> Q Bool
 function dsh_gt(a, b) {
-  if(a.type.type_constructor == b.type.type_constructor) {
+  if(a.type == b.type) {
     var type_constructor = a.type.type_constructor;
     if((type_constructor == "Integer") || (type_constructor == "Double")) {
       return dsh_bool((a.value > b.value));
@@ -62,7 +62,7 @@ function dsh_gt(a, b) {
 // LTE: is a lesser than b or equal?
 // (Ord a, QA a) => Q a -> Q a -> Q Bool
 function dsh_lte(a, b) {
-  if(a.type.type_constructor == b.type.type_constructor) {
+  if(a.type == b.type) {
     var type_constructor = a.type.type_constructor;
     if((type_constructor == "Integer") || (type_constructor == "Double")) {
       return dsh_bool((a.value <= b.value));
@@ -86,7 +86,7 @@ function dsh_lte(a, b) {
 // GTE: is a greater than b or equal?
 // (Ord a, QA a) => Q a -> Q a -> Q Bool
 function dsh_gte(a, b) {
-  if(a.type.type_constructor == b.type.type_constructor) {
+  if(a.type == b.type) {
     var type_constructor = a.type.type_constructor;
     if((type_constructor == "Integer") || (type_constructor == "Double")) {
       return dsh_bool((a.value >= b.value));
