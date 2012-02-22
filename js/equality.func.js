@@ -105,7 +105,7 @@ function dhc_min(a) {
   if(type_constructor == "Text") {
     var min_value = "";
     for(i=0; i<a.value.length; i++) {
-      var cur_char = type_constructor.substr(i,1);
+      var cur_char = a.value.substr(i,1);
       if((cur_char.charCodeAt(0) < min_value.charCodeAt(0)) || !min_value) {
         min_value = cur_char;
       }
@@ -127,7 +127,7 @@ function dhc_max(a) {
   if(type_constructor == "Text") {
     var max_value = "";
     for(i=0; i<a.value.length; i++) {
-      var cur_char = type_constructor.substr(i,1);
+      var cur_char = a.value.substr(i,1);
       if((cur_char.charCodeAt(0) > max_value.charCodeAt(0)) || !max_value) {
         max_value = cur_char;
       }
