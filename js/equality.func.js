@@ -102,7 +102,6 @@ function dsh_gte(a, b) {
 // MINIMUM --> TODO: Tuples?!
 function dhc_min(as) {
   if (as.value != null) {
-    var type_constructor = as.type.type_constructor;
     var min_value = as.value[0];
     for(i=1; i<as.value.length; i++) {
       var cur_value = as.value[i];
@@ -120,7 +119,6 @@ function dhc_min(as) {
 // MAXIMUM --> TODO: Tuples?!
 function dhc_max(as) {
   if (as.value != null) {
-    var type_constructor = as.type.type_constructor;
     var max_value = as.value[0];
     for(i=1; i<as.value.length; i++) {
       var cur_value = as.value[i];
