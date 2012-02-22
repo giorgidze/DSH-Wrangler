@@ -80,13 +80,14 @@ function dsh_text(text_value) {
 }
 
 // List: returns an list json object
-function dsh_list(type_constructor, list_value) {
+function dsh_list(tconstructor, list_value) {
   var jsonObject = {"type" : {"type_constructor" : "List"
           , "argument1" : null
           }
           , "value" : null,
           };
-  jsonObject.type.argument1 = type_constructor;
+  jsonObject.type.argument1 = tconstructor;
   jsonObject.value = list_value;
   return jsonObject;
 }
+
