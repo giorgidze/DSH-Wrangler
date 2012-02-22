@@ -18,12 +18,10 @@ function dsh_lt(a, b) {
     var type_constructor = a.type.type_constructor;
     if((type_constructor == "Integer") || (type_constructor == "Double")) {
       return dsh_bool((a.value < b.value));
-    } else if((type_constructor == "Char") {
+    } else if(type_constructor == "Char") {
       return dsh_bool((a.value.charCodeAt(0) < b.value.charCodeAt(0)));
-    } else if((type_constructor == "Text") {
+    } else if((type_constructor == "Text") || (type_constructor == "List")) {
       return dsh_bool((a.value.length < b.value.length));
-    } else if((type_constructor == "List") {
-        // TODO
     } else if(type_constructor.substr(0,5) != "Tuple") {
         // TODO
     } else {
@@ -42,12 +40,10 @@ function dsh_gt(a, b) {
     var type_constructor = a.type.type_constructor;
     if((type_constructor == "Integer") || (type_constructor == "Double")) {
       return dsh_bool((a.value > b.value));
-    } else if((type_constructor == "Char") {
+    } else if(type_constructor == "Char") {
       return dsh_bool((a.value.charCodeAt(0) > b.value.charCodeAt(0)));
-    } else if((type_constructor == "Text") {
+    } else if((type_constructor == "Text") || (type_constructor == "List")) {
       return dsh_bool((a.value.length > b.value.length));
-    } else if((type_constructor == "List") {
-        // TODO
     } else if(type_constructor.substr(0,5) != "Tuple") {
         // TODO
     } else {
@@ -66,12 +62,10 @@ function dsh_lte(a, b) {
     var type_constructor = a.type.type_constructor;
     if((type_constructor == "Integer") || (type_constructor == "Double")) {
       return dsh_bool((a.value <= b.value));
-    } else if((type_constructor == "Char") {
+    } else if(type_constructor == "Char") {
       return dsh_bool((a.value.charCodeAt(0) <= b.value.charCodeAt(0)));
-    } else if((type_constructor == "Text") {
+    } else if((type_constructor == "Text") || (type_constructor == "List")) {
       return dsh_bool((a.value.length <= b.value.length));
-    } else if((type_constructor == "List") {
-        // TODO
     } else if(type_constructor.substr(0,5) != "Tuple") {
         // TODO
     } else {
@@ -90,12 +84,10 @@ function dsh_gte(a, b) {
     var type_constructor = a.type.type_constructor;
     if((type_constructor == "Integer") || (type_constructor == "Double")) {
       return dsh_bool((a.value >= b.value));
-    } else if((type_constructor == "Char") {
+    } else if(type_constructor == "Char") {
       return dsh_bool((a.value.charCodeAt(0) >= b.value.charCodeAt(0)));
-    } else if((type_constructor == "Text") {
+    } else if((type_constructor == "Text") || (type_constructor == "List")) {
       return dsh_bool((a.value.length >= b.value.length));
-    } else if((type_constructor == "List") {
-        // TODO
     } else if(type_constructor.substr(0,5) != "Tuple") {
         // TODO
     } else {
