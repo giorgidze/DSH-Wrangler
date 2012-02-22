@@ -99,45 +99,37 @@ function dsh_gte(a, b) {
 }
 
 
-// MINIMUM
-function dhc_min(a) {
-  var type_constructor = a.type.type_constructor;
-  if(type_constructor == "Text") {
-    var min_value = "";
-    for(i=0; i<a.value.length; i++) {
-      var cur_char = a.value.substr(i,1);
-      if((cur_char.charCodeAt(0) < min_value.charCodeAt(0)) || !min_value) {
-        min_value = cur_char;
+// MINIMUM --> TODO: Tuples?!
+function dhc_min(as) {
+  if (as.value != null) {
+    var type_constructor = as.type.type_constructor;
+    var min_value = as.value[0];
+    for(i=1; i<as.value.length; i++) {
+      var cur_value = as.value[i];
+      if(dsh_lt(cur_value, min_value)) {
+        min_value = cur_value;
       }
     }
-    return dsh_char(min_value);
-  } else if(type_constructor == "List")) {
-    // TODO
-  } else if(type_constructor.substr(0,5) != "Tuple") {
-    // TODO
+    return min_value;
   } else {
-    throw new Error("Input is not a valid type.");
+    throw new Error("Input is empty.");
   }
 }
 
 
-// MAXIMUM
-function dhc_max(a) {
-  var type_constructor = a.type.type_constructor;
-  if(type_constructor == "Text") {
-    var max_value = "";
-    for(i=0; i<a.value.length; i++) {
-      var cur_char = a.value.substr(i,1);
-      if((cur_char.charCodeAt(0) > max_value.charCodeAt(0)) || !max_value) {
-        max_value = cur_char;
+// MAXIMUM --> TODO: Tuples?!
+function dhc_max(as) {
+  if (as.value != null) {
+    var type_constructor = as.type.type_constructor;
+    var max_value = as.value[0];
+    for(i=1; i<as.value.length; i++) {
+      var cur_value = as.value[i];
+      if(dsh_gt(cur_value, max_value)) {
+        max_value = cur_value;
       }
     }
-    return dsh_char(max_value);
-  } else if(type_constructor == "List")) {
-    // TODO
-  } else if(type_constructor.substr(0,5) != "Tuple") {
-    // TODO
+    return max_value;
   } else {
-    throw new Error("Input is not a valid type.");
+    throw new Error("Input is empty.");
   }
 }
