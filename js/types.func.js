@@ -91,3 +91,21 @@ function dsh_list(tconstructor, list_value) {
   return jsonObject;
 }
 
+// TODO !
+// Tuple: returns an tuple json object
+function dsh_tuple(arguments, tuple_values) {
+  var jsonObject = { "type"  : { "type_constructor" : "Tuple2"
+                          , "argument1" : {"type_constructor" : "Text"}
+                          , "argument2" : {"type_constructor" : "Integer"}
+                          }
+
+              , "value1" : {"type_constructor" : "Text"
+                          , "value" : "Test"
+                          }
+              , "value2" : {"type_constructor" : "Integer"
+                          , "value" : "1"
+                          }
+              };
+  jsonObject.value = list_value;
+  return jsonObject;
+}
