@@ -20,8 +20,7 @@ function dsh_singleton(a) {
 // CONS: add element e at head of a list
 // forall a. QA a => Q a -> Q [a] -> Q [a]
 function dsh_cons(e, as) {
-  var bs = new Array();
-  bs.concat(as);
+  var bs = [].concat(as);
   bs.value.unshift(e);
   return bs;
 }
@@ -29,8 +28,7 @@ function dsh_cons(e, as) {
 // SNOC: add element e at the end of a list
 // forall a. QA a => Q [a] -> Q a -> Q [a]
 function dsh_snoc(as, e) {
-  var bs = new Array();
-  bs.concat(as);
+  var bs = [].concat(as);
   bs.value.push(e);
   return bs;
 }
@@ -46,13 +44,13 @@ function dsh_head(as) {
 // forall a. QA a => Q Integer -> Q [a] -> Q [a]
 function dsh_take(n, as) {
   var l = as.value.length;
-  var bs = new Array();
   if(l>=n) {
+    var bs = new Array();
     for(i=0; i<(l - n); i++) {
       bs.value.push(as.value[i]);
     }
   } else {
-    bs.concat(as);
+    var bs = [].concat(as);
   }
   return bs;
 }
@@ -60,8 +58,7 @@ function dsh_take(n, as) {
 // TAIL: extract the elements after the head of a list
 // forall a. QA a => Q [a] -> Q [a]
 function dsh_tail(list) {
-  var bs = new Array();
-  bs.concat(as);
+  var bs = [].concat(as);
   bs.value.shift();
   return bs;
 }
