@@ -48,14 +48,11 @@ line comments in the translation.
             }
 
 [| (t1,t2) |] = { "type"  :  [| (t1,t2) |]_type   -- where t1 and t2 are the types of elements in the tuple
-                , "value1" : v1                   -- where v1 is an object of type t1 in our representation
-                , "value2" : v2                   -- where v2 is an object of type t2 in our representation
+                , "value" : v                     -- where v is an JSON Array with objects of type t1 and t2 in our representation
                 }
 
 [| (t1,t2,t3) |] = { "type"  :  [| (t1,t2,t3) |]_type  -- where t1, t2 and t3 are the types of elements in the tuple
-                   , "value1" : v1                -- where v1 is an object of type t1 in our representation
-                   , "value2" : v2                -- where v2 is an object of type t2 in our representation
-                   , "value2" : v2                -- where v2 is an object of type t3 in our representation
+                   , "value" : v                       -- where v is an JSON Array with objects of type t1, t2 and t3 in our representation
                    }
                   
 
@@ -67,12 +64,13 @@ line comments in the translation.
 [| Text |]_type    = {"type_constructor" : "Text"}
 
 [| [t] |]_type     = { "type_constructor" : "List"
-                     , "argument1" : [| t |]_type
+                     , "argument" : [| t |]_type
                      }
 
-[| (t1,t2) |]_type = { "type_constructor" : "Tuple2"
-                     , "argument1" : [| t1 |]_type
-                     , "argument2" : [| t2 |]_type
+[| (t1,t2) |]_type = { "type_constructor" : "Tuple"
+                     , "argument" : [ [| t1 |]_type, [| t2 |]_type ]
                      }
-                     
-...                     
+
+[| (t1,t2,t3) |]_type = { "type_constructor" : "Tuple"
+                        , "argument" : [ [| t1 |]_type, [| t2 |]_type, [| t3 |]_type ]
+                        }                     
