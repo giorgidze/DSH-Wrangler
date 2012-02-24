@@ -49,12 +49,12 @@ function dsh_head(as) {
 function dsh_take(n, as) {
   var l = as.value.length;
   if(l>=n) {
-    var bs = new Array();
+    var bs = dsh_empty();
     for(i=0; i<(l - n); i++) {
       bs.value.push(as.value[i]);
     }
   } else {
-    var bs = [].concat(as);
+    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
   }
   return bs;
 }
@@ -81,8 +81,10 @@ function dsh_drop(n, as) {
 // forall a b. (QA a, QA b) => (Q a -> Q b) -> Q [a] -> Q [b]
 function dsh_map(f, as) {
   var l = as.value.length;
-  var bs = new Array();
-  for (i = 0; i < l; i++) bs[i] = f(as.value[i]);
+  var bs = dsh_empty();
+  for (i = 0; i < l; i++) {
+    bs.value[i] = f(as.value[i]);
+  }
   return bs;
 }
 
@@ -90,3 +92,31 @@ function dsh_map(f, as) {
 //   if (as.value == null) return list_empty();
 //   else return list_cons(f(list_head(as)),list_map(f,list_tail(as))) 
 // }
+
+
+// APPEND: append two tables
+// forall a. QA a => Q [a] -> Q [a] -> Q [a]
+function dsh_append(as, bs) {
+  var cs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+  var l = bs.value.length;
+  for(i=0; i<l; i++) {
+    cs.value.push(bs.value[i]);
+  }
+  return cs;
+}
+
+// FILTER: applied to a predicate and a list, returns the list of those elements that satisfy the predicate
+// forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q [a]
+function dsh_filter(f, as) {
+  var bs = dsh_empty();
+  var l = as.value.length;
+  var j = 0;
+  for (i = 0; i < l; i++) {
+    var p = f(as.value[i]);
+    if (p.value) {
+      bs.value[j] = as.value[i];
+      j++;
+    }
+  }
+  return bs;  
+}
