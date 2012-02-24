@@ -14,7 +14,7 @@ function dsh_nil() {
 }
 
 function dsh_singleton(a) {
-  return dsh_cons(a,list_empty());
+  return dsh_cons(a,dsh_empty());
 }
 
 // CONS: add element e at head of a list
