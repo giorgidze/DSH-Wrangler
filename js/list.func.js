@@ -2,8 +2,8 @@
 // QA a => Q [a]
 function dsh_empty() {
   var jsonObject = { "type" : { "type_constructor" : "List" 
-                             , "argument" : null
-                             }
+                              , "argument" : null
+                              }
                    , "value" : []
                    };
   return jsonObject;
@@ -119,4 +119,72 @@ function dsh_filter(f, as) {
     }
   }
   return bs;  
+}
+
+// TODO
+// It doesn't return our json types yet
+function dsh_groupWith(f, as) {
+  var l = as.value.length;
+  var groups = new Object();
+
+  for (i = 0; i < l; i++) {
+    var p = f(as.value[i]);
+	// create an associative array with the results of p as keys (the value of teh key is also an array)
+    // and group the values in these arrays
+    if(!eval('groups.'+p.value)) {
+      eval('groups.'+p.value+' = new Array()');
+      eval('groups.'+p.value+'.push(as.value[i])');
+    } else {
+      eval('groups.'+p.value+'.push(as.value[i])');
+    }
+  }
+  return groups; 
+}
+
+
+function dsh_sortWith(f, as) {
+  // TODO
+}
+
+// LAST: extract the last row
+// forall a. QA a => Q [a] -> Q a
+function dsh_last(as) {
+  var l = list.value.length;
+  return as.value[(l - 1)];
+}
+
+// INIT: all rows of a table expect the last one
+// forall a. QA a => Q [a] -> Q [a]
+function dsh_init(as) {
+  var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+  return bs.value.pop();
+}
+
+// NULL: test whether a table is empty (zero rows)
+// QA a => Q [a] -> Q Bool
+function dsh_null(as) {
+  var l = as.value.length;
+  if(l > 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// LENGTH: returns the number of rows
+// QA a => Q [a] -> Q Integer
+function dsh_length(as) {
+  return dsh_integer(as.value.length);
+}
+
+// index :: Q [a] -> Q Integer -> Q a
+function dsh_index(as,i) {
+  return (as.value[i.value]);
+}
+
+// REVERSE: the rows of a table in reverse order
+// forall a. QA a => Q [a] -> Q [a]
+function dsh_reverse(as) {
+  var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+  return bs.value.reverse();
 }
