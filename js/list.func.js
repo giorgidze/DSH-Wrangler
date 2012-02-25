@@ -15,10 +15,10 @@ function dsh_nil() {
   return dsh_empty();
 }
 
-function dsh_singleton(a) {
-  var bs = dsh_cons(a,dsh_empty());
-  bs.type.argument = a.type;	// Set list argument = type of elements
-  return as;
+function dsh_singleton(e) {
+  var bs = dsh_cons(e,dsh_empty());
+  bs.type.argument = e.type;	// Set list argument = type of elements
+  return bs;
 }
 
 // CONS: add element e at head of a list
@@ -26,6 +26,7 @@ function dsh_singleton(a) {
 function dsh_cons(e, as) {
   var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
   bs.value.unshift(e);
+  bs.type.argument = e.type;
   return bs;
 }
 
@@ -34,6 +35,7 @@ function dsh_cons(e, as) {
 function dsh_snoc(as, e) {
   var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
   bs.value.push(e);
+  bs.type.argument = e.type;
   return bs;
 }
 
@@ -138,13 +140,13 @@ function dsh_groupWith(f, as) {
     }
   }
 
-  var bs = dsh_empty();						// new list (contains the groups later)
+  var bs = dsh_empty();                     // new list (contains the groups later)
   for (j=0; j < groups.length; j++) {
-    var cs = dsh_empty();					// create a new list for every group
+    var cs = dsh_empty();                   // create a new list for every group
     for(k=0; k<groups[j]; k++) {
-      cs = dsh_snoc(cs,groups[j][k]));		// fill group list with elements
+      cs = dsh_snoc(cs,groups[j][k]));      // fill group list with elements
     }
-    bs = dsh_snoc(bs, cs);					// add group to main list
+    bs = dsh_snoc(bs, cs);                  // add group to main list
   }
 
   return bs; 
