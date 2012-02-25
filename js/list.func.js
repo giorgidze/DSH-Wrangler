@@ -122,15 +122,14 @@ function dsh_filter(f, as) {
 }
 
 // TODO
-// It doesn't return our json types yet
 function dsh_groupWith(f, as) {
   var l = as.value.length;
   var groups = new Object();
 
+  // create an associative array with the result of p as a key (the value of the key is also an array)
+  // group the values in these keys (arrays)
   for (i = 0; i < l; i++) {
     var p = f(as.value[i]);
-	// create an associative array with the results of p as keys (the value of teh key is also an array)
-    // and group the values in these arrays
     if(!eval('groups.'+p.value)) {
       eval('groups.'+p.value+' = new Array()');
       eval('groups.'+p.value+'.push(as.value[i])');
@@ -138,7 +137,17 @@ function dsh_groupWith(f, as) {
       eval('groups.'+p.value+'.push(as.value[i])');
     }
   }
-  return groups; 
+
+  var bs = dsh_empty();						// new list (contains the groups later)
+  for (j=0; j < groups.length; j++) {
+    var cs = dsh_empty();					// create a new list for every group
+    for(k=0; k<groups[j]; k++) {
+      cs = dsh_snoc(cs,groups[j][k]));		// fill group list with elements
+    }
+    bs = dsh_snoc(bs, cs);					// add group to main list
+  }
+
+  return bs; 
 }
 
 
