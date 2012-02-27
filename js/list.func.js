@@ -197,12 +197,12 @@ function dsh_groupWith(f, as) {
 
   var bs = dsh_empty();                     // new list (contains the groups later)
 
-  for (result in groups) {					// for every group ...
-    var cs = dsh_empty();                   // create a new list ...
+  for (result in groups) {                  // create for every group ...
+    var cs = dsh_empty();                   // a new list ...
     for(k=0; k<groups[result].length; k++) {
       cs = dsh_snoc(cs,groups[result][k]);  // and fill with its elements
     }
-    bs = dsh_snoc(bs, cs);                  // add group to main list
+    bs = dsh_snoc(bs, cs);                  // add the group to main list
   }
 
   return bs; 
