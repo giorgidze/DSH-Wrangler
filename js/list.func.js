@@ -213,6 +213,21 @@ function dsh_sortWith(f, as) {
   // TODO
 }
 
+// THE
+function dsh_the(as) {
+  if((as.type.type_constructor == "List")) {
+    var e = as.value[0];
+    for(i=1; i<as.value.length; i++) {
+      if(JSON.stringify(e) != JSON.stringify(as.value[i])) {
+        throw new Error("Non-identical elements.");
+      }
+    }
+    return e;
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
 // LAST: extract the last row
 // forall a. QA a => Q [a] -> Q a
 function dsh_last(as) {
