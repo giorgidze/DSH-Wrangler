@@ -232,7 +232,7 @@ function dsh_the(as) {
 // forall a. QA a => Q [a] -> Q a
 function dsh_last(as) {
   if((as.type.type_constructor == "List")) {
-    var l = list.value.length;
+    var l = as.value.length;
     return as.value[(l - 1)];
   } else {
     throw new Error("Input is not of type list.");
@@ -256,9 +256,9 @@ function dsh_null(as) {
   if((as.type.type_constructor == "List")) {
     var l = as.value.length;
     if(l > 0) {
-      return false;
+      return dsh_bool(false);
     } else {
-      return true;
+      return dsh_bool(true);
     }
   } else {
     throw new Error("Input is not of type list.");
