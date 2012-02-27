@@ -325,6 +325,37 @@ function dsh_reverse(as) {
   }
 }
 
+// SPLITAT
+// forall a. QA a => Q Integer -> Q [a] -> Q ([a], [a])
+function dsh_splitAt(n,as) {
+  if((as.type.type_constructor == "List")) {
+    var bs = dsh_empty();
+    bs = dsh_snoc(bs,dsh_take(n,as));
+    bs = dsh_snoc(bs,dsh_drop(n,as));
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
+// ELEM
+// forall a. (Eq a, QA a) => Q a -> Q [a] -> Q Bool
+function dsh_elem(e,as) {
+  for(var i=0; i<as.value.length; i++) {
+      if(JSON.stringify(e) == JSON.stringify(as.value[i])) return dsh_bool(true);
+  }
+  return dsh_bool(false);
+}
+
+// NOTELEM
+// forall a. (Eq a, QA a) => Q a -> Q [a] -> Q Bool
+function dsh_notElem(e,as) {
+  for(var i=0; i<as.value.length; i++) {
+      if(JSON.stringify(e) == JSON.stringify(as.value[i])) return dsh_bool(false);
+  }
+  return dsh_bool(true);
+}
+
 // ZIP
 // forall a b. (QA a, QA b) => Q [a] -> Q [b] -> Q [(a, b)]
 function dsh_zip(as, bs) {
@@ -357,4 +388,17 @@ function dsh_unzip(as) {
   } else {
     throw new Error("Input is not of type list.");
   }
+}
+
+// NUB
+// forall a. (Eq a, QA a) => Q [a] -> Q [a]
+function dsh_nub(as) {
+  var bs = dsh_empty();
+  var l = as.value.length;
+  for(var i=0; i<l; i++) {
+    if(!dsh_cond(dsh_elem(as.value[i],bs),false,true)) {
+      bs = dsh_snoc(bs,as.value[i]);
+    }
+  }
+  return bs;
 }
