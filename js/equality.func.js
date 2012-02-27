@@ -103,7 +103,7 @@ function dsh_gte(a, b) {
 function dhc_min(as) {
   if (as.value != null) {
     var min_value = as.value[0];
-    for(i=1; i<as.value.length; i++) {
+    for(var i=1; i<as.value.length; i++) {
       var cur_value = as.value[i];
       if(dsh_lt(cur_value, min_value)) {
         min_value = cur_value;
@@ -120,7 +120,7 @@ function dhc_min(as) {
 function dhc_max(as) {
   if (as.value != null) {
     var max_value = as.value[0];
-    for(i=1; i<as.value.length; i++) {
+    for(var i=1; i<as.value.length; i++) {
       var cur_value = as.value[i];
       if(dsh_gt(cur_value, max_value)) {
         max_value = cur_value;
