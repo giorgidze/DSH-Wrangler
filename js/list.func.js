@@ -1,11 +1,22 @@
 // EMPTY: create an empty list
 // QA a => Q [a]
 function dsh_empty() {
-  var jsonObject = { "type" : { "type_constructor" : "List" 
-                              , "argument" : null
-                              }
+  var jsonObject = {"type" : { "type_constructor" : "List" 
+                             , "argument" : null
+                             }
                    , "value" : []
                    };
+  if((dsh_empty.arguments[0] == "Bool") ||
+     (dsh_empty.arguments[0] == "Char") ||
+     (dsh_empty.arguments[0] == "Double") ||
+     (dsh_empty.arguments[0] == "Integer") ||
+     (dsh_empty.arguments[0] == "Unit") ||
+     (dsh_empty.arguments[0] == "Text") ||
+     (dsh_empty.arguments[0] == "List") ||
+     (dsh_empty.arguments[0] == "Tuple")) {
+    jsonObject.type.argument = new Object();
+    jsonObject.type.argument.type_constructor = dsh_empty.arguments[0];
+  }
   return jsonObject;
 }
 
