@@ -82,30 +82,27 @@ function dsh_text(text_value) {
 // List: returns an list json object
 function dsh_list(tconstructor, list_value) {
   var jsonObject = {"type" : {"type_constructor" : "List"
-          , "argument1" : null
+          , "argument" : null
           }
-          , "value" : null,
+          , "value" : [],
           };
   jsonObject.type.argument1 = tconstructor;
   jsonObject.value = list_value;
   return jsonObject;
 }
 
-// TODO !
 // Tuple: returns an tuple json object
-function dsh_tuple(arguments, tuple_values) {
-  var jsonObject = { "type"  : { "type_constructor" : "Tuple2"
-                          , "argument1" : {"type_constructor" : "Text"}
-                          , "argument2" : {"type_constructor" : "Integer"}
+function dsh_tuple() {
+  var jsonObject = { "type"  : { "type_constructor" : "Tuple"
+                          , "argument" : []
                           }
 
-              , "value1" : {"type_constructor" : "Text"
-                          , "value" : "Test"
-                          }
-              , "value2" : {"type_constructor" : "Integer"
-                          , "value" : "1"
-                          }
+              , "value" : []
               };
-  jsonObject.value = list_value;
+  var l = dsh_tuple.arguments.length;
+  for(i=0; i<l; i++) {
+    jsonObject.type.argument.push(dsh_tuple.arguments[i].type);
+    jsonObject.value.push(dsh_tuple.arguments[i]);
+  }
   return jsonObject;
 }
