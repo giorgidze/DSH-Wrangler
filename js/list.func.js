@@ -28,7 +28,7 @@ function dsh_nil() {
 
 function dsh_singleton(e) {
   var bs = dsh_cons(e,dsh_empty());
-  bs.type.argument = e.type;	// Set list argument = type of elements
+  bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
   return bs;
 }
 
@@ -37,9 +37,9 @@ function dsh_singleton(e) {
 function dsh_cons(e, as) {
   var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
   if(as.type.argument == null) {
-    bs.type.argument = e.type;
+    bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
   }
-  if(JSON.stringify(e.type) == JSON.stringify(as.type.argument)) {
+  if(JSON.stringify(e.type) == JSON.stringify(bs.type.argument)) {
     bs.value.unshift(e);
     return bs;
   } else {
@@ -52,9 +52,9 @@ function dsh_cons(e, as) {
 function dsh_snoc(as, e) {
   var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
   if(as.type.argument == null) {
-    bs.type.argument = e.type;
+    bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
   }
-  if(JSON.stringify(e.type) == JSON.stringify(as.type.argument)) {
+  if(JSON.stringify(e.type) == JSON.stringify(bs.type.argument)) {
     bs.value.push(e);
     return bs;
   } else {
@@ -75,6 +75,7 @@ function dsh_take(n, as) {
   var l = as.value.length;
   if(l>=n) {
     var bs = dsh_empty();
+    bs.type.argument = $.extend(true, {}, as.type.argument);	// Deep copy of an object via jquery
     for(i=0; i<(l - n); i++) {
       bs.value.push(as.value[i]);
     }
