@@ -179,6 +179,7 @@ function dsh_filter(f, as) {
 }
 
 // GROUPWITH 
+// Ord b => (a -> b) -> [a] -> [[a]]
 function dsh_groupWith(f, as) {
   var l = as.value.length;
   var groups = new Object();
@@ -195,7 +196,7 @@ function dsh_groupWith(f, as) {
     }
   }
 
-  var bs = dsh_empty();                     // new list (contains the groups later)
+  var bs = dsh_empty();                     // create a new list (contains the groups later)
 
   for (result in groups) {                  // create for every group ...
     var cs = dsh_empty();                   // a new list ...
@@ -208,9 +209,33 @@ function dsh_groupWith(f, as) {
   return bs; 
 }
 
-
+// SORTWITH
+// Ord b => (a -> b) -> [a] -> [a]
 function dsh_sortWith(f, as) {
-  // TODO
+  var l = as.value.length;
+  var groups = new Object();
+
+  // create an associative array with the result of p as a key (the value of the key is also an array)
+  // group the values in these keys (arrays)
+  for (i = 0; i < l; i++) {
+    var p = f(as.value[i]);
+    if(eval('groups.'+p.value+" == null")) {
+      eval('groups.'+p.value+' = new Array()');
+      eval('groups.'+p.value+'.push(as.value[i])');
+    } else {
+      eval('groups.'+p.value+'.push(as.value[i])');
+    }
+  }
+
+  var bs = dsh_empty();                     // create a new list (contains the groups later)
+
+  for (result in groups) {                  // and fill it with grouped elements ...
+    for(k=0; k<groups[result].length; k++) {
+      bs = dsh_snoc(bs,groups[result][k]);  
+    }
+  }
+
+  return bs
 }
 
 // THE
