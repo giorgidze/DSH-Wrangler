@@ -80,14 +80,21 @@ function dsh_text(text_value) {
 }
 
 // List: returns an list json object
-function dsh_list(tconstructor, list_value) {
+function dsh_list() {
   var jsonObject = {"type" : {"type_constructor" : "List"
           , "argument" : null
           }
           , "value" : [],
           };
-  jsonObject.type.argument1 = tconstructor;
-  jsonObject.value = list_value;
+  jsonObject.type.argument = $.extend(true, {}, dsh_list.arguments[0].type);	// Set list argument (via deep copy) = type of element e
+  var l = dsh_list.arguments.length;
+  for(i=0; i<l; i++) {
+    if(JSON.stringify(jsonObject.type.argument) == JSON.stringify(dsh_list.arguments[i].type)) {
+      jsonObject.value.push(dsh_list.arguments[i]);
+    } else {
+      throw new Error("Input is not of same type.");
+    }
+  }
   return jsonObject;
 }
 
@@ -101,8 +108,8 @@ function dsh_tuple() {
               };
   var l = dsh_tuple.arguments.length;
   for(i=0; i<l; i++) {
-    jsonObject.type.argument.push(dsh_tuple.arguments[i].type);
-    jsonObject.value.push(dsh_tuple.arguments[i]);
+    jsonObject.type.argument.push($.extend(true, {}, dsh_tuple.arguments[i].type));	// Set list argument (via deep copy) = type of element e
+    jsonObject.value.push($.extend(true, {}, dsh_tuple.arguments[i]));				// Set value (via deep copy)
   }
   return jsonObject;
 }
