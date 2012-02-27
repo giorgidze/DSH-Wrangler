@@ -89,7 +89,7 @@ function dsh_take(n, as) {
     if(l>=n) {
       var bs = dsh_empty();
       bs.type.argument = $.extend(true, {}, as.type.argument);	// Deep copy of an object via jquery
-      for(i=0; i<n; i++) {
+      for(var i=0; i<n; i++) {
         bs.value.push(as.value[i]);
       }
     } else {
@@ -118,7 +118,7 @@ function dsh_tail(as) {
 function dsh_drop(n, as) {
   if((as.type.type_constructor == "List")) {
     var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-    for(i=0; i<n; i++) {
+    for(var i=0; i<n; i++) {
       bs.value.shift();
     }
     return bs;
@@ -153,7 +153,7 @@ function dsh_append(as, bs) {
   if((as.type.type_constructor == "List") && (as.type.type_constructor == "List")) {
     var cs = $.extend(true, {}, as);	// Deep copy of an object via jquery
     var l = bs.value.length;
-    for(i=0; i<l; i++) {
+    for(var i=0; i<l; i++) {
       cs = dsh_snoc(cs, bs.value[i]);
     }
     return cs;
@@ -200,7 +200,7 @@ function dsh_groupWith(f, as) {
 
   for (result in groups) {                  // create for every group ...
     var cs = dsh_empty();                   // a new list ...
-    for(k=0; k<groups[result].length; k++) {
+    for(var k=0; k<groups[result].length; k++) {
       cs = dsh_snoc(cs,groups[result][k]);  // and fill with its elements
     }
     bs = dsh_snoc(bs, cs);                  // add the group to main list
@@ -230,7 +230,7 @@ function dsh_sortWith(f, as) {
   var bs = dsh_empty();                     // create a new list (contains the groups later)
 
   for (result in groups) {                  // and fill it with grouped elements ...
-    for(k=0; k<groups[result].length; k++) {
+    for(var k=0; k<groups[result].length; k++) {
       bs = dsh_snoc(bs,groups[result][k]);  
     }
   }
@@ -242,7 +242,7 @@ function dsh_sortWith(f, as) {
 function dsh_the(as) {
   if((as.type.type_constructor == "List")) {
     var e = as.value[0];
-    for(i=1; i<as.value.length; i++) {
+    for(var i=1; i<as.value.length; i++) {
       if(JSON.stringify(e) != JSON.stringify(as.value[i])) {
         throw new Error("Non-identical elements.");
       }
@@ -320,6 +320,19 @@ function dsh_reverse(as) {
   if((as.type.type_constructor == "List")) {
     var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
     return bs.value.reverse();
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
+function dsh_zip(as, bs) {
+  if((as.type.type_constructor == "List") && (bs.type.type_constructor == "List")) {
+    var l = (as.value.length >= bs.value.length) ? bs.value.length : as.value.length;
+    var cs = dsh_empty("Tuple");
+    for(var i=1; i<l; i++) {
+//      cs = dsh_snoc(bs,dsh_tuple(as.value[i],bs.value[i]));
+      cs = dsh_snoc(bs,dsh_tuple(as.value[i],bs.value[i]));
+    return cs;
   } else {
     throw new Error("Input is not of type list.");
   }
