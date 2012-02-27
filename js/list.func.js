@@ -35,88 +35,111 @@ function dsh_singleton(e) {
 // CONS: add element e at head of a list
 // forall a. QA a => Q a -> Q [a] -> Q [a]
 function dsh_cons(e, as) {
-  var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  if(as.type.argument == null) {
-    bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
-  }
-  if(JSON.stringify(e.type) == JSON.stringify(bs.type.argument)) {
-    bs.value.unshift(e);
-    return bs;
+  if((as.type.type_constructor == "List")) {
+    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+    if(as.type.argument == null) {
+      bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
+    }
+    if(JSON.stringify(e.type) == JSON.stringify(bs.type.argument)) {
+      bs.value.unshift(e);
+      return bs;
+    } else {
+      throw new Error("Input is not of same type.");
+    }
   } else {
-    throw new Error("Input is not of same type.");
+    throw new Error("Input is not of type list.");
   }
 }
 
 // SNOC: add element e at the end of a list
 // forall a. QA a => Q [a] -> Q a -> Q [a]
 function dsh_snoc(as, e) {
-  var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  if(as.type.argument == null) {
-    bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
-  }
-  if(JSON.stringify(e.type) == JSON.stringify(bs.type.argument)) {
-    bs.value.push(e);
-    return bs;
+  if((as.type.type_constructor == "List")) {
+    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+    if(as.type.argument == null) {
+      bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
+    }
+    if(JSON.stringify(e.type) == JSON.stringify(bs.type.argument)) {
+      bs.value.push(e);
+      return bs;
+    } else {
+      throw new Error("Input is not of same type.");
+    }
   } else {
-    throw new Error("Input is not of same type.");
+    throw new Error("Input is not of type list.");
   }
 }
 
 // HEAD: extract the first row
 // forall a. QA a => Q [a] -> Q a
 function dsh_head(as) {
-  if (as.value.length) return as.value[0];
-  else throw new Error("Input is empty.");
+  if((as.type.type_constructor == "List")) {
+    if (as.value.length) return as.value[0];
+    else throw new Error("Input is empty.");
+  } else {
+    throw new Error("Input is not of type list.");
+  }
 }
 
 // TAKE: take the first n elements of a list
 // forall a. QA a => Q Integer -> Q [a] -> Q [a]
 function dsh_take(n, as) {
-  var l = as.value.length;
-  if(l>=n) {
-    var bs = dsh_empty();
-    bs.type.argument = $.extend(true, {}, as.type.argument);	// Deep copy of an object via jquery
-    for(i=0; i<n; i++) {
-      bs.value.push(as.value[i]);
+  if((as.type.type_constructor == "List")) {
+    var l = as.value.length;
+    if(l>=n) {
+      var bs = dsh_empty();
+      bs.type.argument = $.extend(true, {}, as.type.argument);	// Deep copy of an object via jquery
+      for(i=0; i<n; i++) {
+        bs.value.push(as.value[i]);
+      }
+    } else {
+      var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
     }
+    return bs;
   } else {
-    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+    throw new Error("Input is not of type list.");
   }
-  return bs;
 }
 
 // TAIL: extract the elements after the head of a list
 // forall a. QA a => Q [a] -> Q [a]
-function dsh_tail(list) {
-  var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  bs.value.shift();
-  return bs;
+function dsh_tail(as) {
+  if((as.type.type_constructor == "List")) {
+    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+    bs.value.shift();
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
+  }
 }
 
 // DROP: drop the first n elements
 // forall a. QA a => Q Integer -> Q [a] -> Q [a]
 function dsh_drop(n, as) {
-  var l = as.value.length;
-  if(l<n) {
-    n = l;
+  if((as.type.type_constructor == "List")) {
+    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+    for(i=0; i<n; i++) {
+      bs.value.shift();
+    }
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
   }
-
-  var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  for(i=0; i<n; i++) {
-    bs.value.shift();
-  }
-  return bs;
 }
 
 // MAP: applying f to each element of list
 // forall a b. (QA a, QA b) => (Q a -> Q b) -> Q [a] -> Q [b]
 function dsh_map(f, as) {
-  var l = as.value.length;
-  var bs = dsh_empty();
-  for (i = 0; i < l; i++) {
-    bs.value[i] = f($.extend(true, {}, as.value[i]));
+  if((as.type.type_constructor == "List")) {
+    var l = as.value.length;
+    var bs = dsh_empty();
+    for (i = 0; i < l; i++) {
+      bs.value[i] = f($.extend(true, {}, as.value[i]));
+    }
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return bs;
 }
 
 // function dsh_map(f, as) {
@@ -127,12 +150,16 @@ function dsh_map(f, as) {
 // APPEND: append two tables
 // forall a. QA a => Q [a] -> Q [a] -> Q [a]
 function dsh_append(as, bs) {
-  var cs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  var l = bs.value.length;
-  for(i=0; i<l; i++) {
-    cs = dsh_snoc(cs, bs.value[i]);
+  if((as.type.type_constructor == "List") && (as.type.type_constructor == "List")) {
+    var cs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+    var l = bs.value.length;
+    for(i=0; i<l; i++) {
+      cs = dsh_snoc(cs, bs.value[i]);
+    }
+    return cs;
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return cs;
 }
 
 // FILTER: applied to a predicate and a list, returns the list of those elements that satisfy the predicate
