@@ -325,13 +325,15 @@ function dsh_reverse(as) {
   }
 }
 
+// ZIP
+// forall a b. (QA a, QA b) => Q [a] -> Q [b] -> Q [(a, b)]
 function dsh_zip(as, bs) {
   if((as.type.type_constructor == "List") && (bs.type.type_constructor == "List")) {
     var l = (as.value.length >= bs.value.length) ? bs.value.length : as.value.length;
-    var cs = dsh_empty("Tuple");
-    for(var i=1; i<l; i++) {
-//      cs = dsh_snoc(bs,dsh_tuple(as.value[i],bs.value[i]));
-      cs = dsh_snoc(bs,dsh_tuple(as.value[i],bs.value[i]));
+    var cs = dsh_empty();
+    for(var i=0; i<l; i++) {
+      cs = dsh_snoc(cs, dsh_tuple(as.value[i],bs.value[i]));
+    }
     return cs;
   } else {
     throw new Error("Input is not of type list.");
