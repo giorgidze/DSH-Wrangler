@@ -96,6 +96,11 @@ function dsh_tail(list) {
 // DROP: drop the first n elements
 // forall a. QA a => Q Integer -> Q [a] -> Q [a]
 function dsh_drop(n, as) {
+  var l = as.value.length;
+  if(l<n) {
+    n = l;
+  }
+
   var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
   for(i=0; i<n; i++) {
     bs.value.shift();
@@ -109,7 +114,7 @@ function dsh_map(f, as) {
   var l = as.value.length;
   var bs = dsh_empty();
   for (i = 0; i < l; i++) {
-    bs.value[i] = f(as.value[i]);
+    bs.value[i] = f($.extend(true, {}, as.value[i]));
   }
   return bs;
 }
@@ -119,14 +124,13 @@ function dsh_map(f, as) {
 //   else return list_cons(f(list_head(as)),list_map(f,list_tail(as))) 
 // }
 
-
 // APPEND: append two tables
 // forall a. QA a => Q [a] -> Q [a] -> Q [a]
 function dsh_append(as, bs) {
   var cs = $.extend(true, {}, as);	// Deep copy of an object via jquery
   var l = bs.value.length;
   for(i=0; i<l; i++) {
-    cs.value.push(bs.value[i]);
+    cs = dsh_snoc(cs, bs.value[i]);
   }
   return cs;
 }
@@ -148,7 +152,7 @@ function dsh_filter(f, as) {
 }
 
 // TODO
-function dsh_groupWith(f, as) {
+/*function dsh_groupWith(f, as) {
   var l = as.value.length;
   var groups = new Object();
 
@@ -174,7 +178,7 @@ function dsh_groupWith(f, as) {
   }
 
   return bs; 
-}
+}*/
 
 
 function dsh_sortWith(f, as) {
