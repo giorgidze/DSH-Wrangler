@@ -88,7 +88,7 @@ function dsh_list() {
           };
   jsonObject.type.argument = $.extend(true, {}, dsh_list.arguments[0].type);	// Set list argument (via deep copy) = type of element e
   var l = dsh_list.arguments.length;
-  for(i=0; i<l; i++) {
+  for(var i=0; i<l; i++) {
     if(JSON.stringify(jsonObject.type.argument) == JSON.stringify(dsh_list.arguments[i].type)) {
       jsonObject.value.push(dsh_list.arguments[i]);
     } else {
@@ -107,7 +107,7 @@ function dsh_tuple() {
               , "value" : []
               };
   var l = dsh_tuple.arguments.length;
-  for(i=0; i<l; i++) {
+  for(var i=0; i<l; i++) {
     jsonObject.type.argument.push($.extend(true, {}, dsh_tuple.arguments[i].type));	// Set list argument (via deep copy) = type of element e
     jsonObject.value.push($.extend(true, {}, dsh_tuple.arguments[i]));				// Set value (via deep copy)
   }
