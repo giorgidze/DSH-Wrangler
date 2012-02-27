@@ -216,42 +216,71 @@ function dsh_sortWith(f, as) {
 // LAST: extract the last row
 // forall a. QA a => Q [a] -> Q a
 function dsh_last(as) {
-  var l = list.value.length;
-  return as.value[(l - 1)];
+  if((as.type.type_constructor == "List")) {
+    var l = list.value.length;
+    return as.value[(l - 1)];
+  } else {
+    throw new Error("Input is not of type list.");
+  }
 }
 
 // INIT: all rows of a table expect the last one
 // forall a. QA a => Q [a] -> Q [a]
 function dsh_init(as) {
-  var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  return bs.value.pop();
+  if((as.type.type_constructor == "List")) {
+    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+    return bs.value.pop();
+  } else {
+    throw new Error("Input is not of type list.");
+  }
 }
 
 // NULL: test whether a table is empty (zero rows)
 // QA a => Q [a] -> Q Bool
 function dsh_null(as) {
-  var l = as.value.length;
-  if(l > 0) {
-    return false;
+  if((as.type.type_constructor == "List")) {
+    var l = as.value.length;
+    if(l > 0) {
+      return false;
+    } else {
+      return true;
+    }
   } else {
-    return true;
+    throw new Error("Input is not of type list.");
   }
 }
 
 // LENGTH: returns the number of rows
 // QA a => Q [a] -> Q Integer
 function dsh_length(as) {
-  return dsh_integer(as.value.length);
+  if((as.type.type_constructor == "List")) {
+    return dsh_integer(as.value.length);
+  } else {
+    throw new Error("Input is not of type list.");
+  }
 }
 
 // index :: Q [a] -> Q Integer -> Q a
 function dsh_index(as,i) {
-  return (as.value[i.value]);
+  if((as.type.type_constructor == "List")) {
+    var l = as.value.length;
+    if(l>i) {
+      return (as.value[i.value]);
+    } else {
+      throw new Error("Invalid index.");
+    }
+  } else {
+    throw new Error("Input is not of type list.");
+  }
 }
 
 // REVERSE: the rows of a table in reverse order
 // forall a. QA a => Q [a] -> Q [a]
 function dsh_reverse(as) {
-  var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  return bs.value.reverse();
+  if((as.type.type_constructor == "List")) {
+    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+    return bs.value.reverse();
+  } else {
+    throw new Error("Input is not of type list.");
+  }
 }
