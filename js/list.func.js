@@ -25,18 +25,30 @@ function dsh_singleton(e) {
 // forall a. QA a => Q a -> Q [a] -> Q [a]
 function dsh_cons(e, as) {
   var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  bs.value.unshift(e);
-  bs.type.argument = e.type;
-  return bs;
+  if(as.type.argument == null) {
+    bs.type.argument = e.type;
+  }
+  if(JSON.stringify(e.type) == JSON.stringify(as.type.argument)) {
+    bs.value.unshift(e);
+    return bs;
+  } else {
+    throw new Error("Input is not of same type.");
+  }
 }
 
 // SNOC: add element e at the end of a list
 // forall a. QA a => Q [a] -> Q a -> Q [a]
 function dsh_snoc(as, e) {
   var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-  bs.value.push(e);
-  bs.type.argument = e.type;
-  return bs;
+  if(as.type.argument == null) {
+    bs.type.argument = e.type;
+  }
+  if(JSON.stringify(e.type) == JSON.stringify(as.type.argument)) {
+    bs.value.push(e);
+    return bs;
+  } else {
+    throw new Error("Input is not of same type.");
+  }
 }
 
 // HEAD: extract the first row
