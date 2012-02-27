@@ -339,3 +339,22 @@ function dsh_zip(as, bs) {
     throw new Error("Input is not of type list.");
   }
 }
+
+// UNZIP
+// forall a b. (QA a, QA b) => Q [(a, b)] -> Q ([a], [b])
+function dsh_unzip(as) {
+  if((as.type.type_constructor == "List")) {
+    var m = as.value.length;
+    var arr = new Array();
+    for(var i=0; i<2; i++) {
+      var cs = dsh_empty();
+      for(var j=0; j<m; j++) {
+        cs = dsh_snoc(cs,as.value[j].value[i]);
+      }
+      arr.push(cs);
+    }
+    return dsh_tuple(arr[0], arr[1]);    // make a tuple of lists
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
