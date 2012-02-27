@@ -76,7 +76,7 @@ function dsh_take(n, as) {
   if(l>=n) {
     var bs = dsh_empty();
     bs.type.argument = $.extend(true, {}, as.type.argument);	// Deep copy of an object via jquery
-    for(i=0; i<(l - n); i++) {
+    for(i=0; i<n; i++) {
       bs.value.push(as.value[i]);
     }
   } else {
