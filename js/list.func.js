@@ -351,6 +351,7 @@ function dsh_splitAt(n,as) {
 }
 
 // TAKEWHILE
+// forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q [a]
 function dsh_takeWhile(f, as) {
   var bs = dsh_empty();
   var l = as.value.length;
@@ -368,6 +369,7 @@ function dsh_takeWhile(f, as) {
 }
 
 // DROPWHILE
+// forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q [a]
 function dsh_dropWhile(f, as) {
   var bs = $.extend(true, {}, as);
   var l = as.value.length;
@@ -382,7 +384,26 @@ function dsh_dropWhile(f, as) {
   return bs;  
 }
 
+// SPAN
+// forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q ([a], [a])
+function dsh_span(f,as) {
+  var bs = dsh_empty();
+  var cs = $.extend(true, {}, as);
+  var l = as.value.length;
+  for(i = 0; i < l; i++) {
+    var p = dsh_cond(f(as.value[i]),true,false);
+    if(p) {
+      bs = dsh_snoc(bs,as.value[i]);
+      cs = dsh_tail(cs);
+    } else {
+      break;
+    }
+  }
+  return dsh_tuple(bs,cs);
+}
+
 // BREAK
+// forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q ([a], [a])
 function dsh_break(f,as) {
   var bs = dsh_empty();
   var cs = $.extend(true, {}, as);
