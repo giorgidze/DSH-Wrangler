@@ -14,9 +14,9 @@ function dsh_not(boolobj) {
 function dsh_and(boolobj1, boolobj2) {
   if((boolobj1.type.type_constructor == "Bool") && (boolobj2.type.type_constructor == "Bool")) {
 	if(boolobj1.value && boolobj2.value) {
-      return dshw_bool(true);
+      return dsh_bool(true);
     } else {
-      return dshw_bool(false); 
+      return dsh_bool(false); 
     }
   } else {
     throw new Error("Input is not of type boolean.");
@@ -28,9 +28,9 @@ function dsh_and(boolobj1, boolobj2) {
 function dsh_or(boolobj1, boolobj2) {
   if((boolobj1.type.type_constructor == "Bool") && (boolobj2.type.type_constructor == "Bool")) {
 	if(boolobj1.value || boolobj2.value) {
-      return dshw_bool(true);
+      return dsh_bool(true);
     } else {
-      return dshw_bool(false); 
+      return dsh_bool(false); 
     }
   } else {
     throw new Error("Input is not of type boolean.");
