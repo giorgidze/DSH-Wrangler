@@ -337,11 +337,30 @@ function dsh_reverse(as) {
   }
 }
 
+// SUM
+// forall a. (QA a, Num a) => Q [a] -> Q a
+function dsh_sum(as){
+  if((as.type.type_constructor == "List")) {
+    var sum = 0;
+    var l = as.value.length;
+    for(var i=0; i<l; i++) {
+      if(as.value[i].type.type_constructor == "Integer") {
+        sum += parseInt(as.value[i].value);
+      } else {
+        throw new Error("List element is not of type integer.");
+      }
+    }
+    return dsh_integer(sum);
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
 // CONCAT
 // forall a. QA a => Q [[a]] -> Q [a]
 function dsh_concat(as){
   if((as.type.type_constructor == "List")) {
-   var bs = dsh_empty();
+    var bs = dsh_empty();
     var l = as.value.length;
     for(var i=0; i<l; i++) {
       if(as.value[i].type.type_constructor == "List") {
