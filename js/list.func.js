@@ -443,6 +443,40 @@ function dsh_concat(as){
   }
 }
 
+// MINIMUM
+// forall a. (QA a, Ord a) => Q [a] -> Q a
+function dhc_minimum(as) {
+  if((as.type.type_constructor == "List")) {
+    var min_value = as.value[0];
+    for(var i=1; i<as.value.length; i++) {
+      var cur_value = as.value[i];
+      if(dsh_cond(dsh_lt(cur_value, min_value),false,true)) {
+        min_value = cur_value;
+      }
+    }
+    return min_value;
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
+// MAXIMUM
+// forall a. (QA a, Ord a) => Q [a] -> Q a
+function dhc_maximum(as) {
+  if((as.type.type_constructor == "List")) {
+    var max_value = as.value[0];
+    for(var i=1; i<as.value.length; i++) {
+      var cur_value = as.value[i];
+      if(dsh_cond(dsh_gt(cur_value, max_value),false,true)) {
+        max_value = cur_value;
+      }
+    }
+    return max_value;
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
 // SPLITAT
 // forall a. QA a => Q Integer -> Q [a] -> Q ([a], [a])
 function dsh_splitAt(n,as) {
