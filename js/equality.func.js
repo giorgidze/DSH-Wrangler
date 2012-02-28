@@ -1,7 +1,7 @@
 // EQ: compares two values for equality
 // (Eq a, QA a) => Q a -> Q a -> Q Bool
 function dsh_eq(a, b) {
-  if (a.type == b.type) return dsh_bool((a.value == b.value));
+  if(JSON.stringify(a.type) == JSON.stringify(b.type)) return dsh_bool((a.value == b.value));
   else throw new Error("Input is not of same type.");
 }
 
