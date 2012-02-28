@@ -1,8 +1,11 @@
 // EQ: compares two values for equality
 // (Eq a, QA a) => Q a -> Q a -> Q Bool
 function dsh_eq(a, b) {
-  if(JSON.stringify(a.type) == JSON.stringify(b.type)) return dsh_bool((JSON.stringify(a.value) == JSON.stringify(b.value)));
-  else throw new Error("Input is not of same type.");
+  if(JSON.stringify(a.type) == JSON.stringify(b.type)) {
+    return dsh_bool((JSON.stringify(a.value) == JSON.stringify(b.value)));
+  } else {
+    throw new Error("Input is not of same type.");
+  }
 }
 
 // NEQ: compares two values for inequality
