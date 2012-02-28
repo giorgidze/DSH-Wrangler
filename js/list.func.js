@@ -367,6 +367,40 @@ function dsh_lor(as){
   }
 }
 
+// ANY
+// QA a => (Q a -> Q Bool) -> Q [a] -> Q Bool
+function dsh_any(f, as) {
+  if((as.type.type_constructor == "List")) {
+    var l = as.value.length;
+    for(i = 0; i < l; i++) {
+      var p = dsh_cond(f(as.value[i]),false,true);
+      if(p) {
+        return dsh_bool(true);  
+      }
+    }
+    return dsh_bool(false);  
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
+// ALL
+// QA a => (Q a -> Q Bool) -> Q [a] -> Q Bool
+function dsh_all(f, as) {
+  if((as.type.type_constructor == "List")) {
+    var l = as.value.length;
+    for(i = 0; i < l; i++) {
+      var p = dsh_cond(dsh_not(f(as.value[i])),false,true);
+      if(p) {
+        return dsh_bool(false);  
+      }
+    }
+    return dsh_bool(true);  
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
 // SUM
 // forall a. (QA a, Num a) => Q [a] -> Q a
 function dsh_sum(as){
