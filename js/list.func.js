@@ -337,6 +337,25 @@ function dsh_reverse(as) {
   }
 }
 
+// CONCAT
+// forall a. QA a => Q [[a]] -> Q [a]
+function dsh_concat(as){
+  if((as.type.type_constructor == "List")) {
+   var bs = dsh_empty();
+    var l = as.value.length;
+    for(var i=0; i<l; i++) {
+      if(as.value[i].type.type_constructor == "List") {
+        bs = dsh_append(bs,as.value[i]);
+      } else {
+        throw new Error("Input is not of type list.");
+      }
+    }
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
 // SPLITAT
 // forall a. QA a => Q Integer -> Q [a] -> Q ([a], [a])
 function dsh_splitAt(n,as) {
