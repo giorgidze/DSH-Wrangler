@@ -177,17 +177,21 @@ function dsh_append(as, bs) {
 // FILTER: applied to a predicate and a list, returns the list of those elements that satisfy the predicate
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q [a]
 function dsh_filter(f, as) {
-  var bs = dsh_empty();
-  var l = as.value.length;
-  var j = 0;
-  for (i = 0; i < l; i++) {
-    var p = f(as.value[i]);
-    if (p.value) {
-      bs.value[j] = as.value[i];
-      j++;
+  if(as.type.type_constructor == "List") {
+    var bs = dsh_empty();
+    var l = as.value.length;
+    var j = 0;
+    for (i = 0; i < l; i++) {
+      var p = dsh_cond(f(as.value[i]),false,true);
+      if (p) {
+        bs.value[j] = as.value[i];
+        j++;
+      }
     }
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return bs;  
 }
 
 // GROUPWITH 
@@ -455,89 +459,113 @@ function dsh_splitAt(n,as) {
 // TAKEWHILE
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q [a]
 function dsh_takeWhile(f, as) {
-  var bs = dsh_empty();
-  var l = as.value.length;
-  var j = 0;
-  for(i = 0; i < l; i++) {
-    var p = f(as.value[i]);
-    if (p.value) {
-      bs.value[j] = as.value[i];
-      j++;
-    } else {
-      break;
+  if((as.type.type_constructor == "List")) {
+    var bs = dsh_empty();
+    var l = as.value.length;
+    var j = 0;
+    for(i = 0; i < l; i++) {
+      var p = dsh_bool(f(as.value[i]),false,true);
+      if(p) {
+        bs.value[j] = as.value[i];
+        j++;
+      } else {
+        break;
+      }
     }
+    return bs;  
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return bs;  
 }
 
 // DROPWHILE
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q [a]
 function dsh_dropWhile(f, as) {
-  var bs = $.extend(true, {}, as);
-  var l = as.value.length;
-  for(i = 0; i < l; i++) {
-    var p = f(as.value[i]);
-    if (p.value) {
-      bs = dsh_tail(bs);
-    } else {
-      break;
+  if((as.type.type_constructor == "List")) {
+    var bs = $.extend(true, {}, as);
+    var l = as.value.length;
+    for(i = 0; i < l; i++) {
+      var p = dsh_bool(f(as.value[i]),false,true);
+      if(p) {
+        bs = dsh_tail(bs);
+      } else {
+        break;
+      }
     }
+    return bs;  
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return bs;  
 }
 
 // SPAN
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q ([a], [a])
 function dsh_span(f,as) {
-  var bs = dsh_empty();
-  var cs = $.extend(true, {}, as);
-  var l = as.value.length;
-  for(i = 0; i < l; i++) {
-    var p = dsh_cond(f(as.value[i]),true,false);
-    if(p) {
-      bs = dsh_snoc(bs,as.value[i]);
-      cs = dsh_tail(cs);
-    } else {
-      break;
+  if((as.type.type_constructor == "List")) {
+    var bs = dsh_empty();
+    var cs = $.extend(true, {}, as);
+    var l = as.value.length;
+    for(i = 0; i < l; i++) {
+      var p = dsh_cond(f(as.value[i]),true,false);
+      if(p) {
+        bs = dsh_snoc(bs,as.value[i]);
+        cs = dsh_tail(cs);
+      } else {
+        break;
+      }
     }
+    return dsh_tuple(bs,cs);
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return dsh_tuple(bs,cs);
 }
 
 // BREAK
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q ([a], [a])
 function dsh_break(f,as) {
-  var bs = dsh_empty();
-  var cs = $.extend(true, {}, as);
-  var l = as.value.length;
-  for(i = 0; i < l; i++) {
-    var p = dsh_cond(f(as.value[i]),false,true);
-    if(p) {
-      bs = dsh_snoc(bs,as.value[i]);
-      cs = dsh_tail(cs);
-    } else {
-      break;
+  if((as.type.type_constructor == "List")) {
+    var bs = dsh_empty();
+    var cs = $.extend(true, {}, as);
+    var l = as.value.length;
+    for(i = 0; i < l; i++) {
+      var p = dsh_cond(f(as.value[i]),false,true);
+      if(p) {
+        bs = dsh_snoc(bs,as.value[i]);
+        cs = dsh_tail(cs);
+      } else {
+        break;
+      }
     }
+    return dsh_tuple(bs,cs);
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return dsh_tuple(bs,cs);
 }
 
 // ELEM
 // forall a. (Eq a, QA a) => Q a -> Q [a] -> Q Bool
 function dsh_elem(e,as) {
-  for(var i=0; i<as.value.length; i++) {
+  if((as.type.type_constructor == "List")) {
+    for(var i=0; i<as.value.length; i++) {
       if(JSON.stringify(e) == JSON.stringify(as.value[i])) return dsh_bool(true);
+    }
+    return dsh_bool(false);
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return dsh_bool(false);
 }
 
 // NOTELEM
 // forall a. (Eq a, QA a) => Q a -> Q [a] -> Q Bool
 function dsh_notElem(e,as) {
-  for(var i=0; i<as.value.length; i++) {
+  if((as.type.type_constructor == "List")) {
+    for(var i=0; i<as.value.length; i++) {
       if(JSON.stringify(e) == JSON.stringify(as.value[i])) return dsh_bool(false);
+    }
+    return dsh_bool(true);
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return dsh_bool(true);
 }
 
 // ZIP
