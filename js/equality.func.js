@@ -169,7 +169,7 @@ function dhc_min(as) {
     var min_value = as.value[0];
     for(var i=1; i<as.value.length; i++) {
       var cur_value = as.value[i];
-      if(dsh_lt(cur_value, min_value)) {
+      if(dsh_cond(dsh_lt(cur_value, min_value),false,true)) {
         min_value = cur_value;
       }
     }
@@ -186,7 +186,7 @@ function dhc_max(as) {
     var max_value = as.value[0];
     for(var i=1; i<as.value.length; i++) {
       var cur_value = as.value[i];
-      if(dsh_gt(cur_value, max_value)) {
+      if(dsh_cond(dsh_gt(cur_value, max_value),false,true)) {
         max_value = cur_value;
       }
     }
