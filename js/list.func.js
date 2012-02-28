@@ -475,12 +475,36 @@ function dsh_unzip(as) {
 // NUB
 // forall a. (Eq a, QA a) => Q [a] -> Q [a]
 function dsh_nub(as) {
-  var bs = dsh_empty();
-  var l = as.value.length;
-  for(var i=0; i<l; i++) {
-    if(!dsh_cond(dsh_elem(as.value[i],bs),false,true)) {
-      bs = dsh_snoc(bs,as.value[i]);
+  if((as.type.type_constructor == "List")) {
+    var bs = dsh_empty();
+    var l = as.value.length;
+    for(var i=0; i<l; i++) {
+      if(!dsh_cond(dsh_elem(as.value[i],bs),false,true)) {
+        bs = dsh_snoc(bs,as.value[i]);
+      }
     }
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
   }
-  return bs;
+}
+
+// FST
+// forall a b. (QA a, QA b) => Q (a, b) -> Q a
+function dsh_fst(as) {
+  if((as.type.type_constructor == "Tuple")) {
+    return as.value[0];
+  } else {
+    throw new Error("Input is not of type tuple.");
+  }
+}
+
+// SND
+// forall a b. (QA a, QA b) => Q (a, b) -> Q b
+function dsh_snd(as) {
+  if((as.type.type_constructor == "Tuple")) {
+    return as.value[1];
+  } else {
+    throw new Error("Input is not of type tuple.");
+  }
 }
