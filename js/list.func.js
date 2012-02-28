@@ -92,6 +92,8 @@ function dsh_take(n, as) {
       for(var i=0; i<n; i++) {
         bs.value.push(as.value[i]);
       }
+    } else if(n==0) {
+	  var bs = dsh_empty();
     } else {
       var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
     }
@@ -105,8 +107,13 @@ function dsh_take(n, as) {
 // forall a. QA a => Q [a] -> Q [a]
 function dsh_tail(as) {
   if((as.type.type_constructor == "List")) {
-    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-    bs.value.shift();
+    var l = as.value.length;
+    if(l>1) {
+      var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+      bs.value.shift();
+    } else { 	// If there is only one element
+	  var bs = dsh_empty();
+    }
     return bs;
   } else {
     throw new Error("Input is not of type list.");
@@ -117,9 +124,14 @@ function dsh_tail(as) {
 // forall a. QA a => Q Integer -> Q [a] -> Q [a]
 function dsh_drop(n, as) {
   if((as.type.type_constructor == "List")) {
-    var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-    for(var i=0; i<n; i++) {
-      bs.value.shift();
+    var l = as.value.length;
+    if(l>n) {
+      var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
+      for(var i=0; i<n; i++) {
+        bs.value.shift();
+      }
+    } else {
+	  var bs = dsh_empty();
     }
     return bs;
   } else {
@@ -343,7 +355,7 @@ function dsh_takeWhile(f, as) {
   var bs = dsh_empty();
   var l = as.value.length;
   var j = 0;
-  for (i = 0; i < l; i++) {
+  for(i = 0; i < l; i++) {
     var p = f(as.value[i]);
     if (p.value) {
       bs.value[j] = as.value[i];
@@ -359,7 +371,7 @@ function dsh_takeWhile(f, as) {
 function dsh_dropWhile(f, as) {
   var bs = $.extend(true, {}, as);
   var l = as.value.length;
-  for (i = 0; i < l; i++) {
+  for(i = 0; i < l; i++) {
     var p = f(as.value[i]);
     if (p.value) {
       bs = dsh_tail(bs);
@@ -368,6 +380,23 @@ function dsh_dropWhile(f, as) {
     }
   }
   return bs;  
+}
+
+// BREAK
+function dsh_break(f,as) {
+  var bs = dsh_empty();
+  var cs = $.extend(true, {}, as);
+  var l = as.value.length;
+  for(i = 0; i < l; i++) {
+    var p = dsh_cond(f(as.value[i]),false,true);
+    if(p) {
+      bs = dsh_snoc(bs,as.value[i]);
+      cs = dsh_tail(cs);
+    } else {
+      break;
+    }
+  }
+  return dsh_tuple(bs,cs);
 }
 
 // ELEM
