@@ -51,7 +51,6 @@ function dsh_lt(a, b) {
   }
 }
 
-
 // GT: is a greater than b?
 // (Ord a, QA a) => Q a -> Q a -> Q Bool
 function dsh_gt(a, b) {
@@ -88,7 +87,6 @@ function dsh_gt(a, b) {
     throw new Error("Input is not of same type.");
   }
 }
-
 
 // LTE: is a lesser than b or equal?
 // (Ord a, QA a) => Q a -> Q a -> Q Bool
@@ -127,7 +125,6 @@ function dsh_lte(a, b) {
   }
 }
 
-
 // GTE: is a greater than b or equal?
 // (Ord a, QA a) => Q a -> Q a -> Q Bool
 function dsh_gte(a, b) {
@@ -165,36 +162,32 @@ function dsh_gte(a, b) {
   }
 }
 
-
 // MINIMUM
-function dhc_min(as) {
-  if (as.value != null) {
-    var min_value = as.value[0];
-    for(var i=1; i<as.value.length; i++) {
-      var cur_value = as.value[i];
-      if(dsh_cond(dsh_lt(cur_value, min_value),false,true)) {
-        min_value = cur_value;
-      }
+// forall a. (Ord a, QA a) => Q a -> Q a -> Q a
+function dhc_min(a, b) {
+  if(JSON.stringify(a.type) == JSON.stringify(b.type)) {
+    var p = dsh_cond(dsh_lt(a,b),false,true);
+    if(p) {
+      return a;
+    } else {
+      return b;
     }
-    return min_value;
   } else {
-    throw new Error("Input is empty.");
+    throw new Error("Input is not of same type.");
   }
 }
 
-
 // MAXIMUM
-function dhc_max(as) {
-  if (as.value != null) {
-    var max_value = as.value[0];
-    for(var i=1; i<as.value.length; i++) {
-      var cur_value = as.value[i];
-      if(dsh_cond(dsh_gt(cur_value, max_value),false,true)) {
-        max_value = cur_value;
-      }
+// forall a. (Ord a, QA a) => Q a -> Q a -> Q a
+function dhc_max(a, b) {
+  if(JSON.stringify(a.type) == JSON.stringify(b.type)) {
+    var p = dsh_cond(dsh_gt(a,b),false,true);
+    if(p) {
+      return a;
+    } else {
+      return b;
     }
-    return max_value;
   } else {
-    throw new Error("Input is empty.");
+    throw new Error("Input is not of same type.");
   }
 }
