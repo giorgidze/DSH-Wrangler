@@ -337,6 +337,36 @@ function dsh_reverse(as) {
   }
 }
 
+// LIST AND
+// Q [Bool] -> Q Bool
+function dsh_land(as){
+  if((as.type.type_constructor == "List")) {
+    var bs = dsh_bool(true);
+    var l = as.value.length;
+    for(var i=0; i<l; i++) {
+      bs = dsh_and(bs,as.value[i]);
+    }
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
+// LIST OR
+// Q [Bool] -> Q Bool
+function dsh_lor(as){
+  if((as.type.type_constructor == "List")) {
+    var bs = dsh_bool(false);
+    var l = as.value.length;
+    for(var i=0; i<l; i++) {
+      bs = dsh_or(bs,as.value[i]);
+    }
+    return bs;
+  } else {
+    throw new Error("Input is not of type list.");
+  }
+}
+
 // SUM
 // forall a. (QA a, Num a) => Q [a] -> Q a
 function dsh_sum(as){
