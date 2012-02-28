@@ -338,6 +338,38 @@ function dsh_splitAt(n,as) {
   }
 }
 
+// TAKEWHILE
+function dsh_takeWhile(f, as) {
+  var bs = dsh_empty();
+  var l = as.value.length;
+  var j = 0;
+  for (i = 0; i < l; i++) {
+    var p = f(as.value[i]);
+    if (p.value) {
+      bs.value[j] = as.value[i];
+      j++;
+    } else {
+      break;
+    }
+  }
+  return bs;  
+}
+
+// DROPWHILE
+function dsh_dropWhile(f, as) {
+  var bs = $.extend(true, {}, as);
+  var l = as.value.length;
+  for (i = 0; i < l; i++) {
+    var p = f(as.value[i]);
+    if (p.value) {
+      bs = dsh_tail(bs);
+    } else {
+      break;
+    }
+  }
+  return bs;  
+}
+
 // ELEM
 // forall a. (Eq a, QA a) => Q a -> Q [a] -> Q Bool
 function dsh_elem(e,as) {
