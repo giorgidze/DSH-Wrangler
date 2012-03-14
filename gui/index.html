@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+    <title>DSH Wrangler</title>
+    <link rel="stylesheet" href="css/wrangler.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/tipTip.css" type="text/css" media="screen" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="jquery/1.7.1/jquery.js"></script>
+    <script type="text/javascript" src="jquery/jquery.tipTip.js"></script>
+
+    <!-- include DSH functions -->
+    <script type="text/javascript" src="../js/types.func.js"></script>
+    <script type="text/javascript" src="../js/bool.func.js"></script>
+    <script type="text/javascript" src="../js/equality.func.js"></script>
+    <script type="text/javascript" src="../js/conditionals.func.js"></script>
+    <script type="text/javascript" src="../js/list.func.js"></script>
+    <script type="text/javascript" src="../js/helper.func.js"></script>
+
+    <script type="text/javascript">
+      var tables = new Array();
+      tables[0] = new Object();
+      tables[1] = new Object();
+      tablecount = 0;
+
+      function variable(varname) {
+        return tables[0][varname];
+      }
+
+      function exec_command() {
+        try {
+          if($('#commandline').val().substring(0,4) == "dsh_") {
+            // extract table name 'variable(...)'
+            var start = $('#commandline').val().indexOf("variable(") + 10;
+            var end = $('#commandline').val().substr(start).indexOf("\"");
+            tablename = $('#commandline').val().substr(start,end);
+
+            var bs = eval($('#commandline').val());
+            if(JSON.stringify(tables[0][tablename]) != JSON.stringify(bs)) {
+              tables[1][tablename] = tables[1][tablename] + 1;
+              tables[0][tablename+'-'+(tables[1][tablename])] = bs;
+              tables[1][tablename+'-'+(tables[1][tablename])] = 0;
+            }
+            $('#table_column').append('Table <b>"'+tablename+'-'+tables[1][tablename]+'"</b>: '+renderTable(bs));
+          } else {
+            eval($('#commandline').val());
+          }
+          actionlog($('#commandline').val(), 1);
+          $('#commandline').val('');
+        } catch(e) {
+          actionlog($('#commandline').val(), 0, e.name.toUpperCase()+": "+e.message);
+        }
+      }
+
+      function actionlog(command, status, msg) {
+        if(status) {
+          $('#log_body').append("<img src=\"img/tick-small.png\" class=\"status-icon\" alt=\"Ok\" title=\"ok!\"/> "+command+"<br />");
+        } else {
+          $('#log_body').append("<img src=\"img/cross-small.png\" class=\"status-icon\" alt=\"Error\" title=\""+msg+"\"/> "+command+"<br />");
+        }
+        $('#logcount').text((parseInt($('#logcount').text()) + 1));
+
+        $(function(){
+          $(".status-icon").tipTip();
+        });
+      }
+
+      function load(filename,tablename) {
+        $.getJSON(filename, function(data) {
+          tables[0][tablename] = data;
+          tables[1][tablename] = 0;
+          $('#table_column').append('Table <b>"'+tablename+'"</b>: '+renderTable(data));
+        })
+        .error(function() { throw new Error("Couldn't load JSON file"); });
+      }
+    </script>
+
+  </head>
+  <body>
+    <div id="logo"><img src="img/logo.png" style="width:275px; height:85px" alt="DataWrangler²" /></div>
+    <div id="top_menu">
+      <a href="">Item 1</a><a href="">Item 2</a><a href="">Item 3</a><a href="">Item 4</a><a href="">Item 5</a>
+    </div>
+
+    <div class="wrap">&nbsp;</div>
+
+    <div id="action_column">
+      <div id="expert_mode">
+	    <div class="action_heading"><img src="img/application-terminal.png" class="control-icon" alt="Actions" title="Actions" /> Commandline</div>
+        <div id="command_body">
+          <input type="text" id="commandline" /><input type="button" id="exec" value="go" onclick="exec_command()" />
+        </div>
+      </div>
+      <div id="user_log">
+	    <div class="action_heading"><img src="img/report.png" class="control-icon" alt="Log" title="Log" /> Log (<span id="logcount">0</span>)</div>
+        <div id="log_body">
+        </div>
+      </div>
+    </div>
+    <div id="table_column">
+    </div>
+  </body>
+</html>
