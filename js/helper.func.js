@@ -25,10 +25,7 @@ function dump(arr,level) {
 }
 
 
-
-// read table data: json --> array
 function renderTable(as) {
-  //alert(JSON.stringify(as));
   if((as.type.type_constructor == 'List') && (as.type.argument.type_constructor == 'Tuple')) {
     var atable = '';
     var tablehead = '';
