@@ -1,0 +1,6 @@
+Commandline example:
+
+load("data.json","foo")
+dsh_tail(variable("foo"))
+dsh_tail(variable("foo-1"))
+dsh_drop(2,variable("foo"))
