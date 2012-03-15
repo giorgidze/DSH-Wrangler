@@ -35,7 +35,7 @@ function dsh_singleton(e) {
 // CONS: add element e at head of a list
 // forall a. QA a => Q a -> Q [a] -> Q [a]
 function dsh_cons(e, as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
     if(as.type.argument == null) {
       bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
@@ -54,7 +54,7 @@ function dsh_cons(e, as) {
 // SNOC: add element e at the end of a list
 // forall a. QA a => Q [a] -> Q a -> Q [a]
 function dsh_snoc(as, e) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
     if(as.type.argument == null) {
       bs.type.argument = $.extend(true, {}, e.type);	// Set list argument (via deep copy) = type of element e
@@ -73,7 +73,7 @@ function dsh_snoc(as, e) {
 // HEAD: extract the first row
 // forall a. QA a => Q [a] -> Q a
 function dsh_head(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     if (as.value.length) return as.value[0];
     else throw new Error("Input is empty.");
   } else {
@@ -84,7 +84,7 @@ function dsh_head(as) {
 // TAKE: take the first n elements of a list
 // forall a. QA a => Q Integer -> Q [a] -> Q [a]
 function dsh_take(n, as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     if(l>=n) {
       var bs = dsh_empty();
@@ -106,7 +106,7 @@ function dsh_take(n, as) {
 // TAIL: extract the elements after the head of a list
 // forall a. QA a => Q [a] -> Q [a]
 function dsh_tail(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     if(l>1) {
       var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
@@ -123,7 +123,7 @@ function dsh_tail(as) {
 // DROP: drop the first n elements
 // forall a. QA a => Q Integer -> Q [a] -> Q [a]
 function dsh_drop(n, as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     if(l>n) {
       var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
@@ -142,7 +142,7 @@ function dsh_drop(n, as) {
 // MAP: applying f to each element of list
 // forall a b. (QA a, QA b) => (Q a -> Q b) -> Q [a] -> Q [b]
 function dsh_map(f, as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     var bs = dsh_empty();
     for (i = 0; i < l; i++) {
@@ -256,7 +256,7 @@ function dsh_sortWith(f, as) {
 
 // THE
 function dsh_the(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var e = as.value[0];
     for(var i=1; i<as.value.length; i++) {
       if(JSON.stringify(e) != JSON.stringify(as.value[i])) {
@@ -272,7 +272,7 @@ function dsh_the(as) {
 // LAST: extract the last row
 // forall a. QA a => Q [a] -> Q a
 function dsh_last(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     return as.value[(l - 1)];
   } else {
@@ -283,9 +283,10 @@ function dsh_last(as) {
 // INIT: all rows of a table expect the last one
 // forall a. QA a => Q [a] -> Q [a]
 function dsh_init(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-    return bs.value.pop();
+    bs.value.pop();
+    return bs;
   } else {
     throw new Error("Input is not of type list.");
   }
@@ -294,7 +295,7 @@ function dsh_init(as) {
 // NULL: test whether a table is empty (zero rows)
 // QA a => Q [a] -> Q Bool
 function dsh_null(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     if(l > 0) {
       return dsh_bool(false);
@@ -309,7 +310,7 @@ function dsh_null(as) {
 // LENGTH: returns the number of rows
 // QA a => Q [a] -> Q Integer
 function dsh_length(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     return dsh_integer(as.value.length);
   } else {
     throw new Error("Input is not of type list.");
@@ -318,7 +319,7 @@ function dsh_length(as) {
 
 // index :: Q [a] -> Q Integer -> Q a
 function dsh_index(as,i) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     if(l>i) {
       return (as.value[i.value]);
@@ -333,9 +334,10 @@ function dsh_index(as,i) {
 // REVERSE: the rows of a table in reverse order
 // forall a. QA a => Q [a] -> Q [a]
 function dsh_reverse(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = $.extend(true, {}, as);	// Deep copy of an object via jquery
-    return bs.value.reverse();
+    bs.value.reverse();
+    return bs;
   } else {
     throw new Error("Input is not of type list.");
   }
@@ -344,7 +346,7 @@ function dsh_reverse(as) {
 // LIST AND
 // Q [Bool] -> Q Bool
 function dsh_list_and(as){
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = dsh_bool(true);
     var l = as.value.length;
     for(var i=0; i<l; i++) {
@@ -359,7 +361,7 @@ function dsh_list_and(as){
 // LIST OR
 // Q [Bool] -> Q Bool
 function dsh_list_or(as){
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = dsh_bool(false);
     var l = as.value.length;
     for(var i=0; i<l; i++) {
@@ -374,7 +376,7 @@ function dsh_list_or(as){
 // ANY
 // QA a => (Q a -> Q Bool) -> Q [a] -> Q Bool
 function dsh_any(f, as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     for(i = 0; i < l; i++) {
       var p = dsh_cond(f(as.value[i]),false,true);
@@ -391,7 +393,7 @@ function dsh_any(f, as) {
 // ALL
 // QA a => (Q a -> Q Bool) -> Q [a] -> Q Bool
 function dsh_all(f, as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var l = as.value.length;
     for(i = 0; i < l; i++) {
       var p = dsh_cond(dsh_not(f(as.value[i])),false,true);
@@ -408,7 +410,7 @@ function dsh_all(f, as) {
 // SUM
 // forall a. (QA a, Num a) => Q [a] -> Q a
 function dsh_sum(as){
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var sum = 0;
     var l = as.value.length;
     for(var i=0; i<l; i++) {
@@ -427,7 +429,7 @@ function dsh_sum(as){
 // CONCAT
 // forall a. QA a => Q [[a]] -> Q [a]
 function dsh_concat(as){
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = dsh_empty();
     var l = as.value.length;
     for(var i=0; i<l; i++) {
@@ -446,7 +448,7 @@ function dsh_concat(as){
 // MINIMUM
 // forall a. (QA a, Ord a) => Q [a] -> Q a
 function dhc_minimum(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var min_value = as.value[0];
     for(var i=1; i<as.value.length; i++) {
       var cur_value = as.value[i];
@@ -463,7 +465,7 @@ function dhc_minimum(as) {
 // MAXIMUM
 // forall a. (QA a, Ord a) => Q [a] -> Q a
 function dhc_maximum(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var max_value = as.value[0];
     for(var i=1; i<as.value.length; i++) {
       var cur_value = as.value[i];
@@ -480,7 +482,7 @@ function dhc_maximum(as) {
 // SPLITAT
 // forall a. QA a => Q Integer -> Q [a] -> Q ([a], [a])
 function dsh_splitAt(n,as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = dsh_empty();
     bs = dsh_snoc(bs,dsh_take(n,as));
     bs = dsh_snoc(bs,dsh_drop(n,as));
@@ -493,7 +495,7 @@ function dsh_splitAt(n,as) {
 // TAKEWHILE
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q [a]
 function dsh_takeWhile(f, as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = dsh_empty();
     var l = as.value.length;
     var j = 0;
@@ -515,7 +517,7 @@ function dsh_takeWhile(f, as) {
 // DROPWHILE
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q [a]
 function dsh_dropWhile(f, as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = $.extend(true, {}, as);
     var l = as.value.length;
     for(i = 0; i < l; i++) {
@@ -535,7 +537,7 @@ function dsh_dropWhile(f, as) {
 // SPAN
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q ([a], [a])
 function dsh_span(f,as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = dsh_empty();
     var cs = $.extend(true, {}, as);
     var l = as.value.length;
@@ -557,7 +559,7 @@ function dsh_span(f,as) {
 // BREAK
 // forall a. QA a => (Q a -> Q Bool) -> Q [a] -> Q ([a], [a])
 function dsh_break(f,as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = dsh_empty();
     var cs = $.extend(true, {}, as);
     var l = as.value.length;
@@ -579,7 +581,7 @@ function dsh_break(f,as) {
 // ELEM
 // forall a. (Eq a, QA a) => Q a -> Q [a] -> Q Bool
 function dsh_elem(e,as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     for(var i=0; i<as.value.length; i++) {
       if(JSON.stringify(e) == JSON.stringify(as.value[i])) return dsh_bool(true);
     }
@@ -592,7 +594,7 @@ function dsh_elem(e,as) {
 // NOTELEM
 // forall a. (Eq a, QA a) => Q a -> Q [a] -> Q Bool
 function dsh_notElem(e,as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     for(var i=0; i<as.value.length; i++) {
       if(JSON.stringify(e) == JSON.stringify(as.value[i])) return dsh_bool(false);
     }
@@ -620,7 +622,7 @@ function dsh_zip(as, bs) {
 // UNZIP
 // forall a b. (QA a, QA b) => Q [(a, b)] -> Q ([a], [b])
 function dsh_unzip(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var m = as.value.length;
     var arr = new Array();
     for(var i=0; i<2; i++) {
@@ -639,7 +641,7 @@ function dsh_unzip(as) {
 // NUB
 // forall a. (Eq a, QA a) => Q [a] -> Q [a]
 function dsh_nub(as) {
-  if((as.type.type_constructor == "List")) {
+  if(as.type.type_constructor == "List") {
     var bs = dsh_empty();
     var l = as.value.length;
     for(var i=0; i<l; i++) {
