@@ -48,7 +48,7 @@
           } else {
             eval($('#commandline').val());
           }
-          actionlog($('#commandline').val(), 1);
+          actionlog($('#commandline').val(), 1, 'Ok!');
           $('#commandline').val('');
         } catch(e) {
           actionlog($('#commandline').val(), 0, e.name.toUpperCase()+": "+e.message);
@@ -57,7 +57,7 @@
 
       function actionlog(command, status, msg) {
         if(status) {
-          $('#log_body').append("<img src=\"img/tick-small.png\" class=\"status-icon\" alt=\"Ok\" title=\"ok!\"/> "+command+"<br />");
+          $('#log_body').append("<img src=\"img/tick-small.png\" class=\"status-icon\" alt=\"Ok\" title=\""+msg+"\"/> "+command+"<br />");
         } else {
           $('#log_body').append("<img src=\"img/cross-small.png\" class=\"status-icon\" alt=\"Error\" title=\""+msg+"\"/> "+command+"<br />");
         }
