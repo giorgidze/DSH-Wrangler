@@ -23,7 +23,11 @@
       tablecount = 0;
 
       function variable(varname) {
-        return tables[0][varname];
+        if(tables[0][varname]) {
+          return tables[0][varname];
+        } else {
+          throw new Error("Unknown variable name '"+varname+"'");
+        }
       }
 
       function exec_command() {
