@@ -146,7 +146,7 @@ function dsh_map(f, as) {
     var l = as.value.length;
     var bs = dsh_empty();
     for (i = 0; i < l; i++) {
-      bs.value[i] = f($.extend(true, {}, as.value[i]));
+      bs = dsh_snoc(bs, f($.extend(true, {}, as.value[i])));
     }
     return bs;
   } else {
