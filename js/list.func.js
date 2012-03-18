@@ -180,12 +180,10 @@ function dsh_filter(f, as) {
   if(as.type.type_constructor == "List") {
     var bs = dsh_empty();
     var l = as.value.length;
-    var j = 0;
     for (i = 0; i < l; i++) {
       var p = dsh_cond(f(as.value[i]),false,true);
       if (p) {
-        bs.value[j] = as.value[i];
-        j++;
+        bs = dsh_snoc(bs, as.value[i]);
       }
     }
     return bs;
