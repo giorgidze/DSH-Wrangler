@@ -48,14 +48,14 @@
           } else {
             eval($('#commandline').val());
           }
-          actionlog($('#commandline').val(), 1, 'Ok!');
+          add_log($('#commandline').val(), 1, 'Ok!');
           $('#commandline').val('');
         } catch(e) {
-          actionlog($('#commandline').val(), 0, e.name.toUpperCase()+": "+e.message);
+          add_log($('#commandline').val(), 0, e.name.toUpperCase()+": "+e.message);
         }
       }
 
-      function actionlog(command, status, msg) {
+      function add_log(command, status, msg) {
         if(status) {
           $('#log_body').append("<table><tr><td><img src=\"img/tick-small.png\" class=\"status-icon\" alt=\"Ok\" title=\""+msg+"\"/></td><td> "+command+"</td></tr></table>");
         } else {
@@ -66,6 +66,11 @@
         $(function(){
           $(".status-icon").tipTip();
         });
+      }
+
+      function clear_log() {
+        $('#log_body').empty();
+        $('#logcount').text(0);
       }
 
       function load(filename,tablename) {
@@ -83,15 +88,10 @@
           eval('delete tables[0]["'+tablename+'"]');
           eval('delete tables[1]["'+tablename+'"]');
           reloadTables(tables[0]);
-          actionlog("Delete table \""+tablename+"\"", 1, 'Ok!');
+          add_log("Delete table \""+tablename+"\"", 1, 'Ok!');
         } catch(e) {
-          actionlog("Delete table \""+tablename+"\"", 0, e.name.toUpperCase()+": "+e.message);
+          add_log("Delete table \""+tablename+"\"", 0, e.name.toUpperCase()+": "+e.message);
         }
-      }
-
-      function clear_log() {
-        $('#log_body').empty();
-        $('#logcount').text(0);
       }
     </script>
 
