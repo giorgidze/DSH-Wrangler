@@ -70,9 +70,12 @@ function renderTable(as) {
 
 
 function reloadTables(tabarr) {
-  $('#table_column').empty();
-  for (entry in tabarr) {
-    $('#table_column').append('<p><a href="javascript:delete_table(\''+entry+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> Table <b>"'+entry+'"</b>:</p>');
-    $(renderTable(tabarr[entry])).hide().appendTo('#table_column').fadeIn(1500);
-  }
+  $('#table_column').fadeOut(600, function() {
+    $('#table_column').empty();
+    $('#table_column').show();
+    for (entry in tabarr) {
+      $('#table_column').append('<p><a href="javascript:delete_table(\''+entry+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> Table <b>"'+entry+'"</b>:</p>');
+      $(renderTable(tabarr[entry])).hide().appendTo('#table_column').fadeIn(1000);
+    }
+  });
 }
