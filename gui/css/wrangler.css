@@ -76,18 +76,19 @@ body {
 
 #action_column {
   float: left;
-  width: 252px;
+  width: 290px;
   height: 600px;
   margin: 30px 40px 0px 0px;
 }
 
 
 #expert_mode {
-  width: 242px;
+  width: 280px;
   height: 80px;
   margin: 0px 0px 0px 10px;
   border: 1px solid #cccccc;
   background: #ffffff;
+  overflow: hidden;
 }
 
 
@@ -97,19 +98,21 @@ body {
   margin: 20px 0px 0px 10px;
   border: 1px solid #cccccc;
   background: #ffffff;
+  overflow: hidden;
 }
 
 
 #user_log {
-  width: 242px;
+  width: 280px;
   margin: 20px 0px 0px 10px;
   border: 1px solid #cccccc;
   background: #ffffff;
+  overflow: hidden;
 }
 
 
-.action_heading {
-  width: 232px;
+.box_heading {
+  width: 270px;
   height: 23px;
   margin: 1px 1px 8px 1px;
   padding: 4px;
@@ -121,9 +124,23 @@ body {
   text-shadow: 1px 1px 3px #999999;
 }
 
+.box_heading a {
+  color: #13255f;
+  font-weight: normal;
+  text-decoration: none;
+  text-shadow: none;
+}
+
+.box_heading a:active , .box_heading a:hover , .box_heading a:focus {
+  color: #13255f;
+  font-weight: normal;
+  text-decoration: none;
+  text-shadow: none;
+}
+
 
 #command_body {
-  width: 232px;
+  width: 268px;
   margin: 0px;
   padding: 6px;
   font-family: Arial, Helvetia;
@@ -133,7 +150,7 @@ body {
 
 
 #log_body {
-  width: 220px;
+  width: 256px;
   height: 300px;
   margin: 0px;
   padding: 12px;
@@ -145,10 +162,10 @@ body {
 
 
 #command_body #commandline {
-  width: 180px;
+  width: 218px;
   border: 1px solid #999999;
   padding: 2px;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 #command_body #exec {
