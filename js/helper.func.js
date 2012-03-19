@@ -70,11 +70,9 @@ function renderTable(as) {
 
 
 function reloadTables(tabarr) {
-  var i = 0;
   $('#table_column').empty();
   for (entry in tabarr) {
-    i++;
     $('#table_column').append('<p><a href="javascript:delete_table(\''+entry+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> Table <b>"'+entry+'"</b>:</p>');
-    $(renderTable(tabarr[entry])).hide().appendTo('#table_column').fadeIn("slow");
+    $(renderTable(tabarr[entry])).hide().appendTo('#table_column').fadeIn(1500);
   }
 }
