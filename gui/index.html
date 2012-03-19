@@ -44,7 +44,7 @@
             tables[1][tablename+'-'+(tables[1][tablename])] = 0;
 
             $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'-'+tables[1][tablename]+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> Table <b>"'+tablename+'-'+tables[1][tablename]+'"</b>:</p>');
-            $(renderTable(bs)).hide().appendTo('#table_column').fadeIn(1500);
+            $(renderTable(bs)).hide().appendTo('#table_column').fadeIn(1000);
           } else {
             eval($('#commandline').val());
           }
@@ -78,7 +78,7 @@
           tables[0][tablename] = data;
           tables[1][tablename] = 0;
           $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> Table <b>"'+tablename+'"</b>:</p>');
-          $(renderTable(data)).hide().appendTo('#table_column').fadeIn(1500);
+          $(renderTable(data)).hide().appendTo('#table_column').fadeIn(1000);
         })
         .error(function() { throw new Error("Couldn't load JSON file"); });
       }
