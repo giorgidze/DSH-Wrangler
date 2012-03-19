@@ -91,6 +91,7 @@
 
       function clear_log() {
         $('#log_body').empty();
+        $('#logcount').text(0);
       }
     </script>
 
@@ -111,7 +112,7 @@
         </div>
       </div>
       <div id="user_log">
-	    <div class="box_heading"><img src="img/report.png" class="control-icon" alt="Log" title="Log" /> Log (<span id="logcount">0</span>) <a href="javascript:clear_log();">[clear]</a></div>
+	    <div class="box_heading"><img src="img/report.png" class="control-icon" alt="Log" title="Log" /> Log (<span id="logcount">0</span>) <a href="javascript:clear_log();" title="clear log">[clear]</a></div>
         <div id="log_body">
         </div>
       </div>
