@@ -121,19 +121,19 @@
   </head>
   <body>
     <div id="logo"><img src="img/logo.png" style="width:275px; height:85px" alt="DataWrangler²" /></div>
-    <div id="top_menu">
+    <!--<div id="top_menu">
       <a href="">Item 1</a><a href="">Item 2</a><a href="">Item 3</a><a href="">Item 4</a><a href="">Item 5</a>
-    </div>
+    </div>-->
 
     <div class="wrap">&nbsp;</div>
+    <div id="expert_mode_long">
+	  <div class="box_heading_long"><img src="img/application-terminal.png" class="control-icon" alt="Actions" title="Actions" /> Commandline</div>
+      <div id="command_body_long">
+        <input type="text" id="commandline" /><input type="button" id="exec" value="go" onclick="exec_command()" />
+      </div>
+    </div>
 
     <div id="action_column">
-      <div id="expert_mode">
-	    <div class="box_heading"><img src="img/application-terminal.png" class="control-icon" alt="Actions" title="Actions" /> Commandline</div>
-        <div id="command_body">
-          <input type="text" id="commandline" /><input type="button" id="exec" value="go" onclick="exec_command()" />
-        </div>
-      </div>
       <div id="user_log">
 	    <div class="box_heading"><img src="img/report.png" class="control-icon" alt="Log" title="Log" /> Log (<span id="logcount">0</span>) <a href="javascript:clear_log();" title="clear log">[clear]</a></div>
         <div id="log_body">
