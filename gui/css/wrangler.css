@@ -78,17 +78,51 @@ body {
   float: left;
   width: 290px;
   height: 600px;
-  margin: 30px 40px 0px 0px;
+  margin: 10px 40px 0px 0px;
 }
 
 
-#expert_mode {
-  width: 280px;
+#expert_mode_long {
   height: 80px;
-  margin: 0px 0px 0px 10px;
+  margin: 20px 10px 0px 10px;
   border: 1px solid #cccccc;
   background: #ffffff;
   overflow: hidden;
+}
+
+.box_heading_long {
+  height: 23px;
+  margin: 1px 1px 8px 1px;
+  padding: 4px;
+  background: url(../img/heading_shadow.png);
+  font-family: Arial, Helvetia;
+  font-size: 12px;
+  text-align: left;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px #999999;
+}
+
+#command_body_long {
+  margin: 0px;
+  padding: 6px;
+  font-family: Arial, Helvetia;
+  font-size: 12px;
+  text-align: left;
+}
+
+#command_body_long #commandline {
+  display: block;
+  width: 92%;
+  float: left;
+  border: 1px solid #999999;
+  padding: 2px;
+  font-size: 15px;
+}
+
+#command_body_long #exec {
+  display: block;
+  width: 7%;
+  font-size: 15px;
 }
 
 
@@ -139,38 +173,15 @@ body {
 }
 
 
-#command_body {
-  width: 268px;
-  margin: 0px;
-  padding: 6px;
-  font-family: Arial, Helvetia;
-  font-size: 12px;
-  text-align: left;
-}
-
-
 #log_body {
   width: 256px;
-  height: 400px;
+  height: 500px;
   margin: 0px;
   padding: 12px;
   font-family: Arial, Helvetia;
   font-size: 12px;
   text-align: left;
   overflow: auto;
-}
-
-
-#command_body #commandline {
-  width: 218px;
-  border: 1px solid #999999;
-  padding: 2px;
-  font-size: 13px;
-}
-
-#command_body #exec {
-  width: 40px;
-  margin: 0px 0px 0px 4px;
 }
 
 
@@ -186,7 +197,7 @@ body {
   font-family: Arial, Helvetia;
   font-size: 12px;
   border-collapse: collapse;
-  margin: 0px 0px 10px 0px;
+  margin: 0px;
 }
 
 
