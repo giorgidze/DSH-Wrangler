@@ -86,13 +86,15 @@ function dsh_list() {
           }
           , "value" : [],
           };
-  jsonObject.type.argument = $.extend(true, {}, dsh_list.arguments[0].type);	// Set list argument (via deep copy) = type of element e
   var l = dsh_list.arguments.length;
-  for(var i=0; i<l; i++) {
-    if(JSON.stringify(jsonObject.type.argument) == JSON.stringify(dsh_list.arguments[i].type)) {
-      jsonObject.value.push(dsh_list.arguments[i]);
-    } else {
-      throw new Error("Input is not of same type.");
+  if(l > 0) {
+    jsonObject.type.argument = $.extend(true, {}, dsh_list.arguments[0].type);	// Set list argument (via deep copy) = type of element e
+    for(var i=0; i<l; i++) {
+      if(JSON.stringify(jsonObject.type.argument) == JSON.stringify(dsh_list.arguments[i].type)) {
+        jsonObject.value.push(dsh_list.arguments[i]);
+      } else {
+        throw new Error("Input is not of same type.");
+      }
     }
   }
   return jsonObject;
