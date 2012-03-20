@@ -1,6 +1,13 @@
-Commandline example:
+Commandline examples:
 
-load("data.json","foo")
-dsh_tail(variable("foo"))
-dsh_tail(variable("foo-1"))
-dsh_drop(2,variable("foo"))
+dsh_load("data.json","studienarbeit")
+dsh_map(function(e) { return e; }, variable("studienarbeit"))
+dsh_tail(variable("studienarbeit"))
+dsh_tail(variable("studienarbeit-1"))
+dsh_drop(2,variable("studienarbeit"))
+
+dsh_assign(dsh_snoc(dsh_empty(),dsh_tuple(dsh_text("foo"),dsh_char("-"),dsh_integer(0))), "foo")
+dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"),dsh_char("f"),dsh_integer(9))),"bar")
+
+dsh_assign(dsh_list(), "test")
+dsh_snoc(variable("test"), dsh_tuple(dsh_integer(1), dsh_text("test")))
