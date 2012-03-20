@@ -11,3 +11,5 @@ dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"),dsh_char("f"),dsh_integer(9))),"ba
 
 dsh_assign(dsh_list(), "test")
 dsh_snoc(variable("test"), dsh_tuple(dsh_integer(1), dsh_text("test")))
+
+dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"),dsh_list(dsh_tuple(dsh_text("foo"),dsh_text("bar"))),dsh_integer(9))),"nested")
