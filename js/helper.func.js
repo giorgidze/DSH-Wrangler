@@ -24,45 +24,48 @@ function dump(arr,level) {
 	return dumped_text;
 }
 
-
+// render a table
 function renderTable(as) {
-  if((as.type.type_constructor == 'List') && (as.type.argument.type_constructor == 'Tuple')) {
+//  if((as.type.type_constructor == 'List') && (as.type.argument.type_constructor == 'Tuple')) {
+  if(as.type.type_constructor == 'List') {
     var atable = '';
     var tablehead = '';
     var tablebody = '';
 
-    // generate table headings
-    for(var h=0; h<as.type.argument.argument.length; h++) {
-      tablehead += '<th>Column '+(h+1)+' ('+as.type.argument.argument[h].type_constructor+')</th>';
-    }
-    var tablehead = '<thead><tr><th class="nonhover"> #</th>'+tablehead+'</tr></thead>';
-
-    // get row
-    for(var i=0; i<as.value.length; i++) {
-      // check if the type of the elements is correct
-      if(JSON.stringify(as.type.argument) == JSON.stringify(as.value[i].type)) {
-        if(as.value[i].value.length == as.value[i].type.argument.length) {
-          var tablecol = '';
-          // get columns of these row
-          for(var j=0; j<as.value[i].value.length; j++) {
-            if(as.value[i].value[j].type.type_constructor == as.value[i].type.argument[j].type_constructor) {
-              tablecol += '<td>'+as.value[i].value[j].value+'</td>';
-            } else {
-              throw new Error("Type of tuple element and type of value doesn't match");
-            }
-          }
-          var tablerow = '<tr><th>'+(i+1)+'</th>'+tablecol+'</tr>';
-          tablebody += tablerow;
-        } else {
-          throw new Error("Quantity of type arguments and values doesn't match");
-        }
-      } else {
-        throw new Error("Type of list elements and type of values doesn't match");
+    if(as.type.argument) {
+      // generate table headings
+      for(var h=0; h<as.type.argument.argument.length; h++) {
+        tablehead += '<th>Column '+(h+1)+' ('+as.type.argument.argument[h].type_constructor+')</th>';
       }
+      var tablehead = '<thead><tr><th class="nonhover"> #</th>'+tablehead+'</tr></thead>';
+
+      // get row
+      for(var i=0; i<as.value.length; i++) {
+        // check if the type of the elements is correct
+        if(JSON.stringify(as.type.argument) == JSON.stringify(as.value[i].type)) {
+          if(as.value[i].value.length == as.value[i].type.argument.length) {
+            var tablecol = '';
+            // get columns of these row
+            for(var j=0; j<as.value[i].value.length; j++) {
+              if(as.value[i].value[j].type.type_constructor == as.value[i].type.argument[j].type_constructor) {
+                tablecol += '<td>'+as.value[i].value[j].value+'</td>';
+              } else {
+                throw new Error("Type of tuple element and type of value doesn't match");
+              }
+            }
+            var tablerow = '<tr><th>'+(i+1)+'</th>'+tablecol+'</tr>';
+            tablebody += tablerow;
+          } else {
+            throw new Error("Quantity of type arguments and values doesn't match");
+          }
+        } else {
+          throw new Error("Type of list elements and type of values doesn't match");
+        }
+      }
+      tablebody = '<tbody>'+tablebody+'</tbody>';
+      atable = '<table>'+tablehead+tablebody+'</table><br />'
+      return atable;
     }
-    tablebody = '<tbody>'+tablebody+'</tbody>';
-    atable = '<table>'+tablehead+tablebody+'</table><br />'
-    return atable;
   } else {
     throw new Error("Input is not a valid table representation");
   }
