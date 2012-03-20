@@ -32,10 +32,10 @@ function renderTable(as) {
     var tablehead = '';
     var tablebody = '';
 
-    if(as.type.argument) {
+    if(as.type.argument && (as.type.argument.type_constructor == 'Tuple')) {
       // generate table headings
       for(var h=0; h<as.type.argument.argument.length; h++) {
-        tablehead += '<th>Column '+(h+1)+' ('+as.type.argument.argument[h].type_constructor+')</th>';
+        tablehead += '<th>' + as.type.argument.argument[h].type_constructor + '</th>';
       }
       var tablehead = '<thead><tr><th class="nonhover"> #</th>'+tablehead+'</tr></thead>';
 
@@ -69,6 +69,9 @@ function renderTable(as) {
       tablebody = '<tbody>'+tablebody+'</tbody>';
       atable = '<table>'+tablehead+tablebody+'</table>'
       return atable;
+    }
+    else {
+      return (renderTable(dsh_map (function (e) {return dsh_tuple(e);}, as)));
     }
   } else {
     throw new Error("Input is not a valid table representation");

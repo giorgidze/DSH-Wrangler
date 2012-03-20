@@ -49,7 +49,7 @@
                 tables[1][tablename] = tables[1][tablename] + 1;
                 tables[0][tablename+'-'+(tables[1][tablename])] = bs;
                 tables[1][tablename+'-'+(tables[1][tablename])] = 0;
-                $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'-'+tables[1][tablename]+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> Table <b>"'+tablename+'-'+tables[1][tablename]+'"</b>:</p>');
+                $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'-'+tables[1][tablename]+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> <b>"'+tablename+'-'+tables[1][tablename]+'"</b>:</p>');
                 $(renderTable(bs)).hide().appendTo('#table_column').fadeIn(1000);
               }
             }
@@ -98,7 +98,7 @@
         $.getJSON(filename, function(data) {
           tables[0][tablename] = data;
           tables[1][tablename] = 0;
-          $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> Table <b>"'+tablename+'"</b>:</p>');
+          $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> <b>"'+tablename+'"</b>:</p>');
           $(renderTable(data)).hide().appendTo('#table_column').fadeIn(1000);
         })
         .error(function() { throw new Error("Couldn't load JSON file"); });
@@ -110,8 +110,8 @@
         if(typeof(bs) == 'object') {
           tables[0][tablename] = bs;
           tables[1][tablename] = 0;
-          $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> Table <b>"'+tablename+'"</b>:</p>');
-          $(renderTable(bs)).hide().appendTo('#table_column').fadeIn(1000);
+          $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> <b>"'+tablename+'"</b>:</p>');
+          $(renderTable(bs)).appendTo('#table_column');
         } else {
           throw new Error("Input is not of type object");
         }
