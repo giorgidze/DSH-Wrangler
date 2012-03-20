@@ -1,0 +1,54 @@
+{
+  "type": { "type_constructor" : "List"
+          , "argument" : { "type_constructor" : "Tuple"
+                         , "argument" : [{ "type_constructor" : "Text"},
+                                         { "type_constructor" : "Char"},
+                                         { "type_constructor" : "Integer"}]
+                         }
+          }
+, "value" : [{ "type"  : { "type_constructor" : "Tuple"
+                         , "argument" : [{ "type_constructor" : "Text"},
+                                         { "type_constructor" : "Char"},
+                                         { "type_constructor" : "Integer"}]
+                         }
+             , "value" : [{ "type_constructor" : "Text"
+                          , "value" : "Test"
+                          },
+                          { "type_constructor" : "Char"
+                          , "value" : "!"
+                          },
+                          { "type_constructor" : "Integer"
+                          , "value" : "1"
+                          }]
+             },
+             { "type"  : { "type_constructor" : "Tuple"
+                         , "argument" : [{ "type_constructor" : "Text"},
+                                         { "type_constructor" : "Char"},
+                                         { "type_constructor" : "Integer"}]
+                         }
+             , "value" : [{ "type_constructor" : "Text"
+                          , "value" : "Hello"
+                          },
+                          { "type_constructor" : "Char"
+                          , "value" : "!"
+                          },
+                          { "type_constructor" : "Integer"
+                          , "value" : "2"
+                          }]
+             },
+             { "type"  : { "type_constructor" : "Tuple"
+                         , "argument" : [{ "type_constructor" : "Text"},
+                                         { "type_constructor" : "Char"},
+                                         { "type_constructor" : "Integer"}]
+                         }
+             , "value" : [{ "type_constructor" : "Text"
+                          , "value" : "World"
+                          },
+                          { "type_constructor" : "Char"
+                          , "value" : "!"
+                          },
+                          { "type_constructor" : "Integer"
+                          , "value" : "3"
+                          }]
+             }]
+}

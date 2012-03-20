@@ -12,4 +12,5 @@ dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"),dsh_char("f"),dsh_integer(9))),"ba
 dsh_assign(dsh_list(), "test")
 dsh_snoc(variable("test"), dsh_tuple(dsh_integer(1), dsh_text("test")))
 
-dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"),dsh_list(dsh_tuple(dsh_text("foo"),dsh_text("bar"))),dsh_integer(9))),"nested")
+dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"),dsh_list(dsh_tuple(dsh_text("foo"),dsh_text("bar")),dsh_tuple(dsh_text("hello"),dsh_text("world"))),dsh_integer(1)),dsh_tuple(dsh_text("bar"),dsh_list(dsh_tuple(dsh_text("john"),dsh_text("doe")),dsh_tuple(dsh_text("test"),dsh_text("entry"))),dsh_integer(2))),"nested")
+dsh_map(function(e){ e.value[1] = dsh_tail(e.value[1]); return e; }, variable("nested"))
