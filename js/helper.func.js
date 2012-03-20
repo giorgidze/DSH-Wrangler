@@ -48,7 +48,11 @@ function renderTable(as) {
             // get columns of these row
             for(var j=0; j<as.value[i].value.length; j++) {
               if(as.value[i].value[j].type.type_constructor == as.value[i].type.argument[j].type_constructor) {
-                tablecol += '<td>'+as.value[i].value[j].value+'</td>';
+                if(as.value[i].value[j].type.type_constructor != 'List') {
+                  tablecol += '<td>'+as.value[i].value[j].value+'</td>';
+                } else {
+                  tablecol += '<td>'+renderTable(as.value[i].value[j])+'</td>';
+                }
               } else {
                 throw new Error("Type of tuple element and type of value doesn't match");
               }
@@ -63,7 +67,7 @@ function renderTable(as) {
         }
       }
       tablebody = '<tbody>'+tablebody+'</tbody>';
-      atable = '<table>'+tablehead+tablebody+'</table><br />'
+      atable = '<table>'+tablehead+tablebody+'</table>'
       return atable;
     }
   } else {
