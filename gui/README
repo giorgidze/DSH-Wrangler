@@ -1,16 +1,19 @@
-Commandline examples:
+BEISPIEL 1
 
 dsh_load("data.json","studienarbeit")
-dsh_map(function(e) { return e; }, variable("studienarbeit"))
+dsh_reverse(variable("studienarbeit"))
+dsh_assign(dsh_append(variable("studienarbeit"), variable("studienarbeit-1")), "append")
 dsh_tail(variable("studienarbeit"))
 dsh_tail(variable("studienarbeit-1"))
-dsh_drop(2,variable("studienarbeit"))
+dsh_map(function(e) { return e; }, variable("append"))
 
-dsh_assign(dsh_snoc(dsh_empty(),dsh_tuple(dsh_text("foo"),dsh_char("-"),dsh_integer(0))), "foo")
-dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"),dsh_char("f"),dsh_integer(9))),"bar")
 
-dsh_assign(dsh_list(), "test")
-dsh_snoc(variable("test"), dsh_tuple(dsh_integer(1), dsh_text("test")))
+BEISPIEL 2
 
-dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"),dsh_list(dsh_tuple(dsh_text("foo"),dsh_text("bar")),dsh_tuple(dsh_text("hello"),dsh_text("world"))),dsh_integer(1)),dsh_tuple(dsh_text("bar"),dsh_list(dsh_tuple(dsh_text("john"),dsh_text("doe")),dsh_tuple(dsh_text("test"),dsh_text("entry"))),dsh_integer(2))),"nested")
+dsh_assign(dsh_list(dsh_tuple(dsh_text("foo"), dsh_list(dsh_tuple(dsh_text("foo"), dsh_text("bar")), dsh_tuple(dsh_text("hello"), dsh_text("world"))), dsh_integer(1)), dsh_tuple(dsh_text("foo"), dsh_list(dsh_tuple(dsh_text("foo"), dsh_text("bar")), dsh_tuple(dsh_text("hello"), dsh_text("world"))), dsh_integer(2)), dsh_tuple(dsh_text("bar"), dsh_list(dsh_tuple(dsh_text("john"), dsh_text("doe")), dsh_tuple(dsh_text("test"), dsh_text("entry"))), dsh_integer(3)), dsh_tuple(dsh_text("bar"), dsh_list(dsh_tuple(dsh_text("john"), dsh_text("doe")), dsh_tuple(dsh_text("test"), dsh_text("entry"))), dsh_integer(4))), "nested")
 dsh_map(function(e){ e.value[1] = dsh_tail(e.value[1]); return e; }, variable("nested"))
+dsh_sortasc(variable("nested-1"))
+dsh_filter(function even(e) {if((e.value[2].value % 2) == 0) {return dsh_bool(true);}else {return dsh_bool(false);}},variable("nested-1-1"))
+dsh_groupWith(function even(e) {if((e.value[2].value % 2) == 0) { return dsh_bool(true);}else { return dsh_bool(false);} }, variable("nested-1-1"))
+dsh_assign(dsh_zip(variable("nested"), variable("nested-1")), "zipped")
+dsh_assign(dsh_unzip(variable("zipped")), "unzipped")

@@ -34,23 +34,27 @@
         try {
           if($('#commandline').val().substring(0,4) == "dsh_") {
 
-            if(($('#commandline').val().substring(0,11) == "dsh_assign(") || ($('#commandline').val().substring(0,9) == "dsh_load(")) {
+            if(($('#commandline').val().substring(0,10) == "dsh_assign") || ($('#commandline').val().substring(0,8) == "dsh_load")) {
               bs = eval($('#commandline').val());
             } else {
               // extract table name 'variable(...)'
               var start = $('#commandline').val().indexOf("variable(");
               var bs;
-
               if(start > 0) {
                 start += 10;
                 var end = $('#commandline').val().substr(start).indexOf("\")");
                 tablename = $('#commandline').val().substr(start,end);
                 bs = eval($('#commandline').val());
-                tables[1][tablename] = tables[1][tablename] + 1;
-                tables[0][tablename+'-'+(tables[1][tablename])] = bs;
-                tables[1][tablename+'-'+(tables[1][tablename])] = 0;
-                $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'-'+tables[1][tablename]+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> <b>"'+tablename+'-'+tables[1][tablename]+'"</b>:</p>');
-                $(renderTable(bs)).hide().appendTo('#table_column').fadeIn(1000);
+                if(typeof(bs) == 'object') {
+                  tables[1][tablename] = tables[1][tablename] + 1;
+                  tables[0][tablename+'-'+(tables[1][tablename])] = bs;
+                  tables[1][tablename+'-'+(tables[1][tablename])] = 0;
+                  var htmlTable = renderTable(bs);
+                  $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'-'+tables[1][tablename]+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> <b>"'+tablename+'-'+tables[1][tablename]+'"</b>:</p>');
+                  $(htmlTable).hide().appendTo('#table_column').fadeIn(1000);
+                } else {
+                  throw new Error("Input is not of type object");
+                }
               }
             }
 
@@ -98,8 +102,9 @@
         $.getJSON(filename, function(data) {
           tables[0][tablename] = data;
           tables[1][tablename] = 0;
+          var htmlTable = renderTable(data);
           $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> <b>"'+tablename+'"</b>:</p>');
-          $(renderTable(data)).hide().appendTo('#table_column').fadeIn(1000);
+          $(htmlTable).hide().appendTo('#table_column').fadeIn(1000);
         })
         .error(function() { throw new Error("Couldn't load JSON file"); });
       }
@@ -110,8 +115,9 @@
         if(typeof(bs) == 'object') {
           tables[0][tablename] = bs;
           tables[1][tablename] = 0;
+          var htmlTable = renderTable(bs);
           $('#table_column').append('<p><a href="javascript:delete_table(\''+tablename+'\');"><img src="img/cross-button.png" class="control-icon" title="Delete table" /></a> <b>"'+tablename+'"</b>:</p>');
-          $(renderTable(bs)).appendTo('#table_column');
+          $(htmlTable).appendTo('#table_column');
         } else {
           throw new Error("Input is not of type object");
         }
@@ -119,6 +125,7 @@
 
       function dsh_debug(as) {
         alert(JSON.stringify(as));
+        return as;
       }
     </script>
 

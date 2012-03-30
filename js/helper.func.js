@@ -48,7 +48,7 @@ function renderTable(as) {
             // get columns of these row
             for(var j=0; j<as.value[i].value.length; j++) {
               if(as.value[i].value[j].type.type_constructor == as.value[i].type.argument[j].type_constructor) {
-                if(as.value[i].value[j].type.type_constructor != 'List') {
+                if((as.value[i].value[j].type.type_constructor != 'List') && (as.value[i].value[j].type.type_constructor != 'Tuple')){
                   tablecol += '<td>'+as.value[i].value[j].value+'</td>';
                 } else {
                   tablecol += '<td>'+renderTable(as.value[i].value[j])+'</td>';
@@ -69,12 +69,36 @@ function renderTable(as) {
       tablebody = '<tbody>'+tablebody+'</tbody>';
       atable = '<table>'+tablehead+tablebody+'</table>'
       return atable;
+    } else {
+      return (renderTable(dsh_map(function (e) {return dsh_tuple(e);}, as)));
     }
-    else {
-      return (renderTable(dsh_map (function (e) {return dsh_tuple(e);}, as)));
+
+  } else if(as.type.type_constructor == 'Tuple') {
+    var atable = '';
+    var tablehead = '';
+    var tablebody = '';
+
+    // generate table headings
+    for(var h=0; h<as.type.argument.length; h++) {
+      tablehead += '<th>' + as.type.argument[h].type_constructor + '</th>';
     }
+
+    var tablehead = '<thead><tr>'+tablehead+'</tr></thead>';
+    var tablecol = '';
+
+    for(var i=0; i<as.value.length; i++) {
+      if((as.value[i].type.type_constructor != 'List') && (as.value[i].type.type_constructor != 'Tuple')){
+        tablecol += '<td>'+as.value[i].value+'</td>';
+      } else {
+        tablecol += '<td>'+renderTable(as.value[i])+'</td>';
+      }
+    }
+    tablebody = '<tbody><tr>'+tablecol+'</tr></tbody>';
+    atable = '<table>'+tablehead+tablebody+'</table>'
+    return atable;
   } else {
-    throw new Error("Input is not a valid table representation");
+    var atable = '<table><thead><tr><th>'+as.type.type_constructor+'</th></tr></thead><tbody><tr><td>'+as.value+'</td></tr></tbody></table>'
+    return atable;
   }
 }
 

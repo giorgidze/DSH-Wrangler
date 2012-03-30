@@ -672,3 +672,32 @@ function dsh_snd(as) {
     throw new Error("Input is not of type tuple.");
   }
 }
+
+function dsh_minid(as) {
+  var min_id = 0;
+  for(var j=1; j<as.value.length; j++) {
+    if(dsh_cond(dsh_lt(as.value[j], as.value[min_id]),false,true)) {
+      min_id = j;
+    }
+  }
+  return min_id;
+}
+
+// SORT ASCENDING
+// forall a. (Ord a, QA a) => Q a -> Q a -> Q a
+function dsh_sortasc(as) {
+  var bs;
+  var cs = $.extend(true, {}, as);	// Deep copy of an object via jquery 
+  if((as.type.type_constructor == "List")) {
+    bs = dsh_empty();
+  } else if((as.type.type_constructor == "Tuple")) {
+    bs = dsh_tuple();
+  }
+
+  for(var i=0; i<as.value.length; i++) {
+    var min_id = dsh_minid(cs);
+    bs = dsh_snoc(bs,cs.value[min_id]);
+    cs.value.splice(min_id,1);
+  }
+  return bs;
+}
